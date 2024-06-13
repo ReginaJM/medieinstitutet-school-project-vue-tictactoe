@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import Players from './Players.vue'
+import Players from './Players.vue';
+import Board from './Board.vue';
 import { ref } from 'vue';
 
 
@@ -30,10 +31,12 @@ console.log("vann?", result);
 
 const playerX = ref<string>("");
 const playerO = ref<string>("");
+const showPlayers = ref<boolean>(true);
 
 const addPlayerNames = (player1: string, player2: string) => {
   playerX.value = player1
   playerO.value = player2
+  showPlayers.value = false; // Dölj Players-komponenten
   console.log(playerX.value, playerO.value);
 }
 
@@ -44,7 +47,8 @@ const addPlayerNames = (player1: string, player2: string) => {
 
 <template>
 
-  <Players @send-players="addPlayerNames"/>
+  <Players v-if="showPlayers" @send-players="addPlayerNames"/>
+  <Board v-else />
 
 </template>
 
