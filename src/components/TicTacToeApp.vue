@@ -1,31 +1,8 @@
 <script setup lang="ts">
 import Players from './Players.vue';
 import Board from './Board.vue';
+import VictoryCheck from './VictoryCheck.vue';
 import { ref } from 'vue';
-
-
-const correctRows: number[][] = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6]
-];
-
-// Ta emot myRow från child och jämföra med de korrekta alternativen genom att köra funktionen controlVictory
-const myRow: number[] = [1, 2, 4, 5]
-
-
-function checkVictory(correctRows: number[][], myRow: number[]): boolean {
-    return correctRows.some(correctRow =>
-        correctRow.every(element => myRow.includes(element))
-    );
-}
-const result = checkVictory(correctRows, myRow);
-console.log("vann?", result);
 
 
 
@@ -37,17 +14,15 @@ const addPlayerNames = (player1: string, player2: string) => {
   playerX.value = player1
   playerO.value = player2
   showPlayers.value = false; // Dölj Players-komponenten
-  console.log(playerX.value, playerO.value);
 }
-
 
 const playerXrow = ref<number[]>([]);
 const playerOrow = ref<number[]>([]);
-console.log('x', playerXrow.value);
-console.log('o', playerOrow.value);
+const totalMoves = ref<number[]>([]);
 
 
-const updatePoints = (playerAndIndex: { index: number; player: string }) => {
+const updatePlayerRow = (playerAndIndex: { index: number; player: string }) => {
+    totalMoves.value.push(1);
     if(playerAndIndex.player === 'X') {
         playerXrow.value.push(playerAndIndex.index)
     } else {
@@ -66,11 +41,15 @@ const updatePoints = (playerAndIndex: { index: number; player: string }) => {
     <Board v-else 
         :playerX="playerX"
         :playerO="playerO"
-        @square-click="updatePoints" 
+        @square-click="updatePlayerRow" 
     />
 
-    X {{ playerXrow }}
-    O {{ playerOrow }}
+    <VictoryCheck v-for="(t, i) in totalMoves" :key="i"
+        :playerX="playerX"
+        :playerO="playerO"
+        :playerXrow="playerXrow"
+        :playerOrow="playerOrow"
+    />
 
 </template>
 
