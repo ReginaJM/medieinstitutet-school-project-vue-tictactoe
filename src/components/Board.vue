@@ -28,7 +28,11 @@ const handleSquareClick = (index: number) => {
   }
 };
 
-
+// Metod för att återställa brädet
+const resetBoard = () => {
+  board.value = Array(9).fill("");
+  currentPlayer.value = "X";
+};
 
 </script>
 
@@ -43,13 +47,16 @@ const handleSquareClick = (index: number) => {
     <div class="game-board">
       <Square
         v-for="(square, index) in board"
-        :key="index"
         :index="index"
         :value="square"
         @square-click="handleSquareClick"
         
       />
     </div>
+
+    <button>Show score</button>
+    <button id="startOverBtn" @click="resetBoard">Start over</button>
+
   </div>
 </template>
 
@@ -60,7 +67,7 @@ const handleSquareClick = (index: number) => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-height: 50%;
+  /* max-height: 50%; */
   text-align: center;
 }
 .game-board {
@@ -68,6 +75,7 @@ const handleSquareClick = (index: number) => {
   grid-template-columns: repeat(3, 100px);
   grid-template-rows: repeat(3, 100px);
   gap: 10px;
+  margin-bottom: 20px;
 }
 
 .square {
@@ -87,7 +95,7 @@ const handleSquareClick = (index: number) => {
 }
 
 .square:hover {
-  background-color: #F8ECE0;
+  background-color: #fdf5eb;
 } 
 
 .square:active {

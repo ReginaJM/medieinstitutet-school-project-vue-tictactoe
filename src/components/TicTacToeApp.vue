@@ -40,6 +40,25 @@ const addPointPlayerO = () => {
 }
 
 
+///
+
+const resetBoard = () => {
+  playerXrow.value = [];
+  playerOrow.value = [];
+  totalMoves.value = [];
+}
+
+const handlePlayerXVictory = () => {
+  addPointPlayerX();
+  resetBoard();
+}
+
+const handlePlayerOVictory = () => {
+  addPointPlayerO();
+  resetBoard();
+}
+
+
 </script>
 
 
@@ -59,8 +78,9 @@ const addPointPlayerO = () => {
         :playerO="playerO"
         :playerXrow="playerXrow"
         :playerOrow="playerOrow"
-        @playerXVictory="addPointPlayerX"
-        @playerOVictory="addPointPlayerO"
+        @playerXVictory="handlePlayerXVictory"
+        @playerOVictory="handlePlayerOVictory"
+        @resetBoard="resetBoard"
     />
 
     <p>x tot {{ playerXpoints }}</p>

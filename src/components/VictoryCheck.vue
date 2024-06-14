@@ -35,12 +35,14 @@ const resultPlayerO = checkVictory(correctRows, props.playerOrow);
 const emit = defineEmits<{
     (e: "playerXVictory"): void;
     (e: "playerOVictory"): void;
+    (e: "resetBoard"): void;
 }>()
 
 watch(() => props.playerXrow, (newVal) => {
   const resultPlayerX = checkVictory(correctRows, newVal);
   if (resultPlayerX) {
     emit('playerXVictory');
+    emit('resetBoard');
   }
 }, { immediate: true });
 
@@ -48,6 +50,7 @@ watch(() => props.playerOrow, (newVal) => {
   const resultPlayerO = checkVictory(correctRows, newVal);
   if (resultPlayerO) {
     emit('playerOVictory');
+    emit('resetBoard');
   }
 }, { immediate: true });
 
