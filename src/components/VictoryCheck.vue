@@ -52,7 +52,7 @@ const resultPlayerO = checkVictory(correctRows, props.playerOrow);
 
 <template>
 
-<div>
+<div class="container">
     <p v-if="resultPlayerX">Player X, {{ playerX }} you are the winner! &#129395;</p>
     <p v-if="resultPlayerO">Player O, {{ playerO }} you are the winner! &#129395;</p>
 </div>
@@ -66,5 +66,12 @@ const resultPlayerO = checkVictory(correctRows, props.playerOrow);
 
 
 <style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
 
 </style>

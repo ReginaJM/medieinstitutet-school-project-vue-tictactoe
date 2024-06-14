@@ -19,6 +19,7 @@ const emit = defineEmits<{
   (e: "square-click", playerAndIndex: { index: number; player: string }): void;
 }>();
 
+
 const handleSquareClick = (index: number) => {
   if (board.value[index] === "") {
     emit("square-click", { index, player: currentPlayer.value });
@@ -26,6 +27,9 @@ const handleSquareClick = (index: number) => {
     currentPlayer.value = currentPlayer.value === "X" ? "O" : "X";
   }
 };
+
+
+
 </script>
 
 <template>
@@ -43,6 +47,7 @@ const handleSquareClick = (index: number) => {
         :index="index"
         :value="square"
         @square-click="handleSquareClick"
+        
       />
     </div>
   </div>
@@ -55,14 +60,14 @@ const handleSquareClick = (index: number) => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  max-height: 50%;
   text-align: center;
 }
 .game-board {
   display: grid;
   grid-template-columns: repeat(3, 100px);
   grid-template-rows: repeat(3, 100px);
-  gap: 5px;
+  gap: 10px;
 }
 
 .square {
@@ -76,9 +81,17 @@ const handleSquareClick = (index: number) => {
   font-size: 2em;
   cursor: pointer;
   user-select: none;
+  border-radius: 25px; /* Rundade hörn */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Drop-shadow */
+  transition: transform 0.1s ease, box-shadow 0.1s ease; /* Animering vid klick */
 }
 
 .square:hover {
-  background-color: #e0e0e0;
+  background-color: #F8ECE0;
+} 
+
+.square:active {
+  transform: translateY(2px); /* Tryck ned cellen */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Mindre skugga vid tryck */
 }
 </style>
