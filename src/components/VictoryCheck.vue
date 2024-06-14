@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 
 const correctRows: number[][] = [
@@ -13,14 +13,6 @@ const correctRows: number[][] = [
   [2, 4, 6]
 ];
 
-/* const props = defineProps<{
-  playerXrow: number[];
-  playerOrow: number[];
-  playerX: string;
-  playerO: string;
-}>();
- */
-
 
 // Det barnet vill ha av föräldern
 interface IVictoryCheckProps {
@@ -32,9 +24,6 @@ interface IVictoryCheckProps {
 const props = defineProps<IVictoryCheckProps>();
 
 
-
-
-
 const checkVictory = (correctRows: number[][], playerRow: number[]): boolean => {
     return correctRows.some(correctRow =>
         correctRow.every(element => playerRow.includes(element))
@@ -42,6 +31,25 @@ const checkVictory = (correctRows: number[][], playerRow: number[]): boolean => 
 }
 const resultPlayerX = checkVictory(correctRows, props.playerXrow);
 const resultPlayerO = checkVictory(correctRows, props.playerOrow);
+
+const emit = defineEmits<{
+    (e: "playerXVictory"): void;
+    (e: "playerOVictory"): void;
+}>()
+
+watch(() => props.playerXrow, (newVal) => {
+  const resultPlayerX = checkVictory(correctRows, newVal);
+  if (resultPlayerX) {
+    emit('playerXVictory');
+  }
+}, { immediate: true });
+
+watch(() => props.playerOrow, (newVal) => {
+  const resultPlayerO = checkVictory(correctRows, newVal);
+  if (resultPlayerO) {
+    emit('playerOVictory');
+  }
+}, { immediate: true });
 
 
 </script>

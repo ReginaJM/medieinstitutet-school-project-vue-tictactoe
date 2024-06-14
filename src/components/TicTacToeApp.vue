@@ -2,13 +2,15 @@
 import Players from './Players.vue';
 import Board from './Board.vue';
 import VictoryCheck from './VictoryCheck.vue';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 
 
 const playerX = ref<string>("");
 const playerO = ref<string>("");
 const showPlayers = ref<boolean>(true);
+const playerXpoints = ref<number>(0);
+const playerOpoints = ref<number>(0);
 
 const addPlayerNames = (player1: string, player2: string) => {
   playerX.value = player1
@@ -30,6 +32,14 @@ const updatePlayerRow = (playerAndIndex: { index: number; player: string }) => {
     }
 }
 
+const addPointPlayerX = () => {
+    playerXpoints.value = playerXpoints.value += 1;
+}
+const addPointPlayerO = () => {
+    playerOpoints.value = playerOpoints.value += 1;
+}
+
+
 </script>
 
 
@@ -49,7 +59,13 @@ const updatePlayerRow = (playerAndIndex: { index: number; player: string }) => {
         :playerO="playerO"
         :playerXrow="playerXrow"
         :playerOrow="playerOrow"
+        @playerXVictory="addPointPlayerX"
+        @playerOVictory="addPointPlayerO"
     />
+
+    <p>x tot {{ playerXpoints }}</p>
+    <p>o tot {{ playerOpoints }}</p>
+    
 
 </template>
 
