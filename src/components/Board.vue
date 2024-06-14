@@ -1,55 +1,80 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import Square from './Square.vue';
 
 
+const board = ref<string[]>(Array(9).fill(''));
+const currentPlayer = ref<string>('X');
+const playerXrow = ref<string>('');
+const playerOrow = ref<string>('');
+
+
+// Det barnet vill ha av föräldern
+interface IBoardProps {
+    playerX: string;
+    playerO: string;
+}
+const props = defineProps<IBoardProps>();
+
+
+// Det barnet ska skicka till föräldern
+const emit = defineEmits<{
+  (e: 'square-click', playerAndIndex: { index: number; player: string }): void;
+}>();
+
+const handleSquareClick = (index: number) => {
+  if (board.value[index] === '') {
+    emit('square-click', { index, player: currentPlayer.value });
+    board.value[index] = currentPlayer.value;
+    currentPlayer.value = currentPlayer.value === 'X' ? 'O' : 'X';
+  }
+};
 
 </script>
 
 
 
-
-
 <template>
 
-    <div class="game-board">
-        <div class="cell" id="cell-0"></div>
-        <div class="cell" id="cell-1"></div>
-        <div class="cell" id="cell-2"></div>
-        <div class="cell" id="cell-3"></div>
-        <div class="cell" id="cell-4"></div>
-        <div class="cell" id="cell-5"></div>
-        <div class="cell" id="cell-6"></div>
-        <div class="cell" id="cell-7"></div>
-        <div class="cell" id="cell-8"></div>
-    </div>
+    <h1>Tic Tac Toe</h1>
+    <p v-if="currentPlayer === 'X'">Player {{ currentPlayer }}: {{ playerX }}, you're up!</p>
+    <p v-else>Player {{ currentPlayer }}: {{ playerO }}, you're up!</p>
 
+  <div class="game-board">
+   
+    <Square
+      v-for="(square, index) in board"
+      :key="index"
+      :index="index"
+      :value="square"
+      :currentPlayer="currentPlayer"
+      @square-click="handleSquareClick"
+    />
+  </div>
 </template>
 
-
-
 <style scoped>
-
 .game-board {
-    display: grid;
-    grid-template-columns: repeat(3, 100px);
-    grid-template-rows: repeat(3, 100px);
-    gap: 5px;
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  gap: 5px;
 }
 
-.cell {
-    width: 100px;
-    height: 100px;
-    background-color: #fff;
-    border: 2px solid #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2em;
-    cursor: pointer;
-    user-select: none;
+.square {
+  width: 100px;
+  height: 100px;
+  background-color: #fff;
+  border: 2px solid #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  cursor: pointer;
+  user-select: none;
 }
 
-.cell:hover {
-    background-color: #e0e0e0;
+.square:hover {
+  background-color: #e0e0e0;
 }
-
 </style>

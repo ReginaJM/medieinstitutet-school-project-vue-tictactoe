@@ -5,14 +5,14 @@ import { ref } from 'vue';
 
 
 const correctRows: number[][] = [
-  [1, 2, 3],
-  [4, 5, 6],
-  [7, 8, 9],
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
   [1, 4, 7],
   [2, 5, 8],
-  [3, 6, 9],
-  [1, 5, 9],
-  [3, 5, 7]
+  [0, 4, 8],
+  [2, 4, 6]
 ];
 
 // Ta emot myRow från child och jämföra med de korrekta alternativen genom att köra funktionen controlVictory
@@ -40,6 +40,21 @@ const addPlayerNames = (player1: string, player2: string) => {
   console.log(playerX.value, playerO.value);
 }
 
+
+const playerXrow = ref<number[]>([]);
+const playerOrow = ref<number[]>([]);
+console.log('x', playerXrow.value);
+console.log('o', playerOrow.value);
+
+
+const updatePoints = (playerAndIndex: { index: number; player: string }) => {
+    if(playerAndIndex.player === 'X') {
+        playerXrow.value.push(playerAndIndex.index)
+    } else {
+        playerOrow.value.push(playerAndIndex.index)
+    }
+}
+
 </script>
 
 
@@ -47,8 +62,15 @@ const addPlayerNames = (player1: string, player2: string) => {
 
 <template>
 
-  <Players v-if="showPlayers" @send-players="addPlayerNames"/>
-  <Board v-else />
+    <Players v-if="showPlayers" @send-players="addPlayerNames"/>
+    <Board v-else 
+        :playerX="playerX"
+        :playerO="playerO"
+        @square-click="updatePoints" 
+    />
+
+    X {{ playerXrow }}
+    O {{ playerOrow }}
 
 </template>
 

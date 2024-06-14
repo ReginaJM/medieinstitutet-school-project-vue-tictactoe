@@ -30,6 +30,8 @@ const handleSubmit = () => {
 
 <template>
 
+    <h1>Tic Tac Toe</h1>
+
     <form @submit.prevent="handleSubmit">
         <label for="playerX">Player X name:</label><br>
         <input type="text" id="playerX" v-model="playerX"><br>
