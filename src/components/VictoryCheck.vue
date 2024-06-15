@@ -29,20 +29,27 @@ const checkVictory = (correctRows: number[][], playerRow: number[]): boolean => 
         correctRow.every(element => playerRow.includes(element))
     );
 }
-const resultPlayerX = checkVictory(correctRows, props.playerXrow);
-const resultPlayerO = checkVictory(correctRows, props.playerOrow);
+
+const resultPlayerX = ref<boolean>(false);
+const resultPlayerO = ref<boolean>(false);
+
+const updateResults = () => {
+  resultPlayerX.value = checkVictory(correctRows, props.playerXrow);
+  resultPlayerO.value = checkVictory(correctRows, props.playerOrow);
+}
+updateResults();
+
+
 
 const emit = defineEmits<{
     (e: "playerXVictory"): void;
     (e: "playerOVictory"): void;
-    (e: "resetBoard"): void;
 }>()
 
 watch(() => props.playerXrow, (newVal) => {
   const resultPlayerX = checkVictory(correctRows, newVal);
   if (resultPlayerX) {
     emit('playerXVictory');
-    emit('resetBoard');
   }
 }, { immediate: true });
 
@@ -50,9 +57,10 @@ watch(() => props.playerOrow, (newVal) => {
   const resultPlayerO = checkVictory(correctRows, newVal);
   if (resultPlayerO) {
     emit('playerOVictory');
-    emit('resetBoard');
   }
-}, { immediate: true });
+}, { immediate: true }); 
+
+
 
 
 </script>
@@ -63,26 +71,9 @@ watch(() => props.playerOrow, (newVal) => {
 
 <template>
 
-<div class="container">
-    <p v-if="resultPlayerX">Player X - {{ playerX }} - you are the winner! &#129395;</p>
-    <p v-if="resultPlayerO">Player O - {{ playerO }} - you are the winner! &#129395;</p>
-</div>
-
 </template>
 
 
-
-
-
-
-
 <style scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
 
 </style>

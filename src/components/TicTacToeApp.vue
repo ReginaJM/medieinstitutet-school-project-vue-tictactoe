@@ -17,6 +17,9 @@ const playerOrow = ref<number[]>([]);
 const totalMoves = ref<number[]>([]);
 const gameOver = ref<boolean>(false); 
 
+const playerXVictory = ref<boolean>(false);
+const playerOVictory = ref<boolean>(false);
+
 
 
 
@@ -94,13 +97,17 @@ const resetBoard = () => {
   saveState(); 
 };
 
+
+
 const handlePlayerXVictory = () => {
+  playerXVictory.value = true;
   addPointPlayerX();
   gameOver.value = true; // Sätt gameOver till true när en spelare vinner
   resetBoard();
 };
 
 const handlePlayerOVictory = () => {
+   playerOVictory.value = true;
   addPointPlayerO();
   gameOver.value = true; // Sätt gameOver till true när en spelare vinner
   resetBoard();
@@ -108,6 +115,8 @@ const handlePlayerOVictory = () => {
 
 const startNewGame = () => {
   resetBoard();
+  playerXVictory.value = false;
+  playerOVictory.value = false;
   gameOver.value = false; // Återställ gameOver här
   /* saveState(); */
 };
@@ -142,11 +151,12 @@ watch([playerX, playerO, playerXpoints, playerOpoints, playerXrow, playerOrow, t
 
 
 <template>
-    <div class="container">
+    <div class="container-app">
 
-    
+        <Players v-if="showPlayers" 
+            @send-players="addPlayerNames"
+        />
 
-        <Players v-if="showPlayers" @send-players="addPlayerNames"/>
         <Board v-else 
             :playerX="playerX"
             :playerO="playerO"
@@ -162,12 +172,13 @@ watch([playerX, playerO, playerXpoints, playerOpoints, playerXrow, playerOrow, t
             :playerOrow="playerOrow"
             @playerXVictory="handlePlayerXVictory"
             @playerOVictory="handlePlayerOVictory"
-            @resetBoard="resetBoard"
+            
         />
 
         <p>x tot {{ playerXpoints }}</p>
         <p>o tot {{ playerOpoints }}</p>
-        <!-- <button @click="startNewGame">Start New Game</button> -->
+        <p v-if="playerXVictory">Player X - {{ playerX }} - you are the winner! &#129395;</p>
+        <p v-if="playerOVictory">Player O - {{ playerO }} - you are the winner! &#129395;</p>
         <br>
         <button @click="resetGame">Reset Game</button>
     </div>
@@ -179,13 +190,25 @@ watch([playerX, playerO, playerXpoints, playerOpoints, playerXrow, playerOrow, t
 
 <style scoped>
 
-.container {
+
+
+.container-app {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* max-height: 50%; */
+  max-width: 50%;
   text-align: center;
+
+  background-color: rgb(222, 233, 201);
+  border: solid 2px black;
+  border-radius: 40px; 
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 30px; 
 }
 
 </style>

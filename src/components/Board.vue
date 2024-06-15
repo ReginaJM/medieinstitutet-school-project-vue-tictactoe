@@ -72,8 +72,7 @@ watch([board, currentPlayer], saveBoardState);
 // Metod för att återställa brädet
 const resetBoard = () => {
   board.value = Array(9).fill("");
-  /* currentPlayer.value = "X";  */
-  decideStartingPlayer(); // Slumpa om vem som börjar
+  decideStartingPlayer(); 
   saveBoardState();
   emit("clear-board");
 };
@@ -81,39 +80,36 @@ const resetBoard = () => {
 </script>
 
 <template>
-  <div class="container">
-    <h1>Tic Tac Toe</h1>
-    <div :class="{ hidden: props.gameOver }">
-        <p v-if="currentPlayer === 'X'">
-        Player {{ currentPlayer }} - {{ playerX }}, you're up!
-        </p>
-        <p v-else>Player {{ currentPlayer }} - {{ playerO }}, you're up!</p> 
-    </div>
+    <div class="container">
+        <h1>Tic Tac Toe</h1>
+        <div :class="{ hidden: props.gameOver }">
+            <p v-if="currentPlayer === 'X'">
+            Player {{ currentPlayer }} - {{ playerX }}, you're up!
+            </p>
+            <p v-else>Player {{ currentPlayer }} - {{ playerO }}, you're up!</p> 
+        </div>
 
-    <div class="game-board">
-      <Square
-        v-for="(square, index) in board"
-        :index="index"
-        :value="square"
-        @square-click="handleSquareClick"
-        
-      />
-    </div>
-
-<!--     <button v-if="gameOver">Play again</button>
-    <br>
-    <button>Show score</button>
-    <button id="startOverBtn" @click="resetBoard">Start over</button> -->
+        <div class="game-board">
+            <Square
+                v-for="(square, index) in board"
+                :index="index"
+                :value="square"
+                @square-click="handleSquareClick"
+                
+            />
+        </div>
     
-    <br>
-    <button>Show score</button>
-    <button v-if="gameOver" @click="resetBoard">Play again</button>
-    
-
-  </div>
+        <br>
+        <button>Show score</button>
+        <button v-if="gameOver" @click="resetBoard">Play again</button>
+    </div>
 </template>
 
 <style scoped>
+
+p {
+    font-family: sans-serif
+} 
 
 .container {
   display: flex;
