@@ -107,7 +107,7 @@ const handlePlayerOVictory = () => {
 const startNewGame = () => {
   resetBoard();
   gameOver.value = false; // Återställ gameOver här
-  saveState();
+  /* saveState(); */
 };
 
 const resetGame = () => {
@@ -140,31 +140,35 @@ watch([playerX, playerO, playerXpoints, playerOpoints, playerXrow, playerOrow, t
 
 
 <template>
+    <div class="container">
 
-    <Players v-if="showPlayers" @send-players="addPlayerNames"/>
-    <Board v-else 
-        :playerX="playerX"
-        :playerO="playerO"
-        :gameOver="gameOver" 
-        @square-click="updatePlayerRow" 
-    />
-
-    <VictoryCheck v-for="(t, i) in totalMoves" :key="i"
-        :playerX="playerX"
-        :playerO="playerO"
-        :playerXrow="playerXrow"
-        :playerOrow="playerOrow"
-        @playerXVictory="handlePlayerXVictory"
-        @playerOVictory="handlePlayerOVictory"
-        @resetBoard="resetBoard"
-    />
-
-    <p>x tot {{ playerXpoints }}</p>
-    <p>o tot {{ playerOpoints }}</p>
-    <button @click="startNewGame">Start New Game</button>
-    <br>
-    <button @click="resetGame">Reset Game</button>
     
+
+        <Players v-if="showPlayers" @send-players="addPlayerNames"/>
+        <Board v-else 
+            :playerX="playerX"
+            :playerO="playerO"
+            :gameOver="gameOver" 
+            @square-click="updatePlayerRow" 
+            @clear-board="startNewGame"
+        />
+
+        <VictoryCheck v-for="(t, i) in totalMoves" :key="i"
+            :playerX="playerX"
+            :playerO="playerO"
+            :playerXrow="playerXrow"
+            :playerOrow="playerOrow"
+            @playerXVictory="handlePlayerXVictory"
+            @playerOVictory="handlePlayerOVictory"
+            @resetBoard="resetBoard"
+        />
+
+        <p>x tot {{ playerXpoints }}</p>
+        <p>o tot {{ playerOpoints }}</p>
+        <!-- <button @click="startNewGame">Start New Game</button> -->
+        <br>
+        <button @click="resetGame">Reset Game</button>
+    </div>
 
 </template>
 
@@ -172,5 +176,14 @@ watch([playerX, playerO, playerXpoints, playerOpoints, playerXrow, playerOrow, t
 
 
 <style scoped>
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* max-height: 50%; */
+  text-align: center;
+}
 
 </style>

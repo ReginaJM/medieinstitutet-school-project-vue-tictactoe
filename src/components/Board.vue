@@ -20,6 +20,7 @@ const props = defineProps<IBoardProps>();
 // Det barnet ska skicka till föräldern
 const emit = defineEmits<{
   (e: "square-click", playerAndIndex: { index: number; player: string }): void;
+  (e: "clear-board"): void;
 }>();
 
 
@@ -64,6 +65,7 @@ const resetBoard = () => {
   board.value = Array(9).fill("");
   currentPlayer.value = "X";
   saveBoardState(); // Save state after resetting the board
+  emit("clear-board");
 };
 
 </script>
@@ -72,9 +74,9 @@ const resetBoard = () => {
   <div class="container">
     <h1>Tic Tac Toe</h1>
     <p v-if="currentPlayer === 'X'">
-      Player {{ currentPlayer }}: {{ playerX }}, you're up!
+      Player {{ currentPlayer }} - {{ playerX }}, you're up!
     </p>
-    <p v-else>Player {{ currentPlayer }}: {{ playerO }}, you're up!</p>
+    <p v-else>Player {{ currentPlayer }} - {{ playerO }}, you're up!</p>
 
     <div class="game-board">
       <Square
@@ -86,10 +88,14 @@ const resetBoard = () => {
       />
     </div>
 
-    <button v-if="gameOver">Play again</button>
+<!--     <button v-if="gameOver">Play again</button>
     <br>
     <button>Show score</button>
-    <button id="startOverBtn" @click="resetBoard">Start over</button>
+    <button id="startOverBtn" @click="resetBoard">Start over</button> -->
+    
+    <br>
+    <button>Show score</button>
+    <button v-if="gameOver" @click="resetBoard">Play again</button>
     
 
   </div>
