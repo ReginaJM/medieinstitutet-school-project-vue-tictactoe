@@ -26,10 +26,10 @@ const handleSubmit = () => {
 
     <form @submit.prevent="handleSubmit">
       <label for="playerX">Player X name:</label><br />
-      <input type="text" id="playerX" v-model="playerX" /><br />
+      <input type="text" id="playerX" required v-model="playerX" /><br />
 
       <label for="playerO">Player O name:</label><br />
-      <input type="text" id="playerO" v-model="playerO" /><br />
+      <input type="text" id="playerO" required v-model="playerO" /><br />
 
       <input type="submit" value="Start game" />
     </form>

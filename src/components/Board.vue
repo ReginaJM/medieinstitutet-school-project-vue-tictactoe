@@ -33,6 +33,12 @@ const handleSquareClick = (index: number) => {
   }
 };
 
+// Funktion för att slumpa fram den aktuella spelaren
+const decideStartingPlayer = () => {
+  currentPlayer.value = Math.random() < 0.5 ? 'X' : 'O';
+};
+
+
 // //Function to save board state to localStorage
 const saveBoardState = () => {
   const state = {
@@ -49,6 +55,8 @@ const loadBoardState = () => {
     const parsedState = JSON.parse(state);
     board.value = parsedState.board;
     currentPlayer.value = parsedState.currentPlayer;
+  } else {
+    decideStartingPlayer();
   }
 };
 
@@ -60,11 +68,13 @@ onMounted(() => {
 // //Watch for changes in the board and save them
 watch([board, currentPlayer], saveBoardState);
 
+
 // Metod för att återställa brädet
 const resetBoard = () => {
   board.value = Array(9).fill("");
-  currentPlayer.value = "X";
-  saveBoardState(); // Save state after resetting the board
+  /* currentPlayer.value = "X";  */
+  decideStartingPlayer(); // Slumpa om vem som börjar
+  saveBoardState();
   emit("clear-board");
 };
 

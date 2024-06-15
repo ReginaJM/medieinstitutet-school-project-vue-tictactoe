@@ -19,6 +19,7 @@ const gameOver = ref<boolean>(false);
 
 
 
+
 // //Function to save state to localStorage
 const saveState = () => {
   const state = {
@@ -89,6 +90,7 @@ const resetBoard = () => {
   playerOrow.value = [];
   totalMoves.value = [];
   /* gameOver.value = false; // Återställ gameOver */
+  /* decideStartingPlayer(); */
   saveState(); 
 };
 
