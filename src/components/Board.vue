@@ -8,10 +8,11 @@ const currentPlayer = ref<string>("X");
 const playerOrow = ref<string>(""); */
 
 // Det barnet vill ha av föräldern
-// ta bort? används ej?
+// ta bort playerX och playerO? används ej?
 interface IBoardProps {
   playerX: string;
   playerO: string;
+  gameOver: boolean;
 }
 // ta bort? används ej?
 const props = defineProps<IBoardProps>();
@@ -23,11 +24,11 @@ const emit = defineEmits<{
 
 
 const handleSquareClick = (index: number) => {
-  if (board.value[index] === "") {
+  if (board.value[index] === "" && !props.gameOver) {
     emit("square-click", { index, player: currentPlayer.value });
     board.value[index] = currentPlayer.value;
     currentPlayer.value = currentPlayer.value === "X" ? "O" : "X";
-    saveBoardState(); // Save state after updating the board
+    saveBoardState(); 
   }
 };
 
@@ -62,6 +63,7 @@ watch([board, currentPlayer], saveBoardState);
 const resetBoard = () => {
   board.value = Array(9).fill("");
   currentPlayer.value = "X";
+  saveBoardState(); // Save state after resetting the board
 };
 
 </script>
@@ -84,8 +86,11 @@ const resetBoard = () => {
       />
     </div>
 
+    <button v-if="gameOver">Play again</button>
+    <br>
     <button>Show score</button>
     <button id="startOverBtn" @click="resetBoard">Start over</button>
+    
 
   </div>
 </template>

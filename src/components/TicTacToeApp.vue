@@ -15,6 +15,9 @@ const playerOpoints = ref<number>(0);
 const playerXrow = ref<number[]>([]);
 const playerOrow = ref<number[]>([]);
 const totalMoves = ref<number[]>([]);
+const gameOver = ref<boolean>(false); 
+
+
 
 // //Function to save state to localStorage
 const saveState = () => {
@@ -27,6 +30,7 @@ const saveState = () => {
     playerOrow: playerOrow.value,
     totalMoves: totalMoves.value,
     showPlayers: showPlayers.value,
+    gameOver: gameOver.value,
   };
   localStorage.setItem("ticTacToeState", JSON.stringify(state));
 };
@@ -44,6 +48,7 @@ const loadState = () => {
     playerOrow.value = parsedState.playerOrow;
     totalMoves.value = parsedState.totalMoves;
     showPlayers.value = parsedState.showPlayers;
+    gameOver.value = parsedState.gameOver;
   }
 };
 
@@ -51,28 +56,30 @@ const loadState = () => {
 const addPlayerNames = (player1: string, player2: string) => {
   playerX.value = player1
   playerO.value = player2
-  showPlayers.value = false; // Dölj Players-komponenten
-  saveState(); // Save state after adding players
-}
+  showPlayers.value = false; 
+  saveState(); 
+};
 
 const updatePlayerRow = (playerAndIndex: { index: number; player: string }) => {
-    totalMoves.value.push(1);
-    if(playerAndIndex.player === 'X') {
-        playerXrow.value.push(playerAndIndex.index)
-    } else {
-        playerOrow.value.push(playerAndIndex.index)
+    if (!gameOver.value) {
+        totalMoves.value.push(1);
+        if(playerAndIndex.player === 'X') {
+            playerXrow.value.push(playerAndIndex.index)
+        } else {
+            playerOrow.value.push(playerAndIndex.index)
+        }
+        saveState(); 
     }
-    saveState(); // Save state after updating player row
-}
+};
 
 const addPointPlayerX = () => {
-    playerXpoints.value = playerXpoints.value += 1;
-    saveState(); // Save state after updating points
-}
+    playerXpoints.value += 1;
+    saveState(); 
+};
 const addPointPlayerO = () => {
-    playerOpoints.value = playerOpoints.value += 1;
-    saveState(); // Save state after updating points
-}
+    playerOpoints.value += 1;
+    saveState(); 
+};
 
 
 ///
@@ -81,18 +88,40 @@ const resetBoard = () => {
   playerXrow.value = [];
   playerOrow.value = [];
   totalMoves.value = [];
-  saveState(); // Save state after resetting the board
-}
+  /* gameOver.value = false; // Återställ gameOver */
+  saveState(); 
+};
 
 const handlePlayerXVictory = () => {
   addPointPlayerX();
+  gameOver.value = true; // Sätt gameOver till true när en spelare vinner
   resetBoard();
-}
+};
 
 const handlePlayerOVictory = () => {
   addPointPlayerO();
+  gameOver.value = true; // Sätt gameOver till true när en spelare vinner
   resetBoard();
 }
+
+const startNewGame = () => {
+  resetBoard();
+  gameOver.value = false; // Återställ gameOver här
+  saveState();
+};
+
+const resetGame = () => {
+  localStorage.clear(); // Tömmer localStorage
+  playerX.value = "";
+  playerO.value = "";
+  playerXpoints.value = 0;
+  playerOpoints.value = 0;
+  playerXrow.value = [];
+  playerOrow.value = [];
+  totalMoves.value = [];
+  showPlayers.value = true;
+  gameOver.value = false;
+};
 
 // // Load state on mounted
 onMounted(() => {
@@ -100,7 +129,7 @@ onMounted(() => {
 });
 
 // //Watch for changes in the state and save them
-watch([playerX, playerO, playerXpoints, playerOpoints, playerXrow, playerOrow, totalMoves, showPlayers], saveState);
+watch([playerX, playerO, playerXpoints, playerOpoints, playerXrow, playerOrow, totalMoves, showPlayers, gameOver], saveState);
 
 
 
@@ -116,6 +145,7 @@ watch([playerX, playerO, playerXpoints, playerOpoints, playerXrow, playerOrow, t
     <Board v-else 
         :playerX="playerX"
         :playerO="playerO"
+        :gameOver="gameOver" 
         @square-click="updatePlayerRow" 
     />
 
@@ -131,6 +161,9 @@ watch([playerX, playerO, playerXpoints, playerOpoints, playerXrow, playerOrow, t
 
     <p>x tot {{ playerXpoints }}</p>
     <p>o tot {{ playerOpoints }}</p>
+    <button @click="startNewGame">Start New Game</button>
+    <br>
+    <button @click="resetGame">Reset Game</button>
     
 
 </template>
