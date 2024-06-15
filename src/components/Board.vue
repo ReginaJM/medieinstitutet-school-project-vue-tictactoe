@@ -73,10 +73,12 @@ const resetBoard = () => {
 <template>
   <div class="container">
     <h1>Tic Tac Toe</h1>
-    <p v-if="currentPlayer === 'X'">
-      Player {{ currentPlayer }} - {{ playerX }}, you're up!
-    </p>
-    <p v-else>Player {{ currentPlayer }} - {{ playerO }}, you're up!</p>
+    <div :class="{ hidden: props.gameOver }">
+        <p v-if="currentPlayer === 'X'">
+        Player {{ currentPlayer }} - {{ playerX }}, you're up!
+        </p>
+        <p v-else>Player {{ currentPlayer }} - {{ playerO }}, you're up!</p> 
+    </div>
 
     <div class="game-board">
       <Square
@@ -142,5 +144,9 @@ const resetBoard = () => {
 .square:active {
   transform: translateY(2px); /* Tryck ned cellen */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Mindre skugga vid tryck */
+}
+
+.hidden {
+  visibility: hidden;
 }
 </style>
