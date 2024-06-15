@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted, watch } from "vue";
 import Square from "./Square.vue";
 
 const board = ref<string[]>(Array(9).fill(""));
 const currentPlayer = ref<string>("X");
-const playerXrow = ref<string>("");
-const playerOrow = ref<string>("");
+/* const playerXrow = ref<string>("");
+const playerOrow = ref<string>(""); */
 
 // Det barnet vill ha av föräldern
+// ta bort? används ej?
 interface IBoardProps {
   playerX: string;
   playerO: string;
 }
+// ta bort? används ej?
 const props = defineProps<IBoardProps>();
 
 // Det barnet ska skicka till föräldern
@@ -25,8 +27,36 @@ const handleSquareClick = (index: number) => {
     emit("square-click", { index, player: currentPlayer.value });
     board.value[index] = currentPlayer.value;
     currentPlayer.value = currentPlayer.value === "X" ? "O" : "X";
+    saveBoardState(); // Save state after updating the board
   }
 };
+
+// //Function to save board state to localStorage
+const saveBoardState = () => {
+  const state = {
+    board: board.value,
+    currentPlayer: currentPlayer.value
+  };
+  localStorage.setItem("boardState", JSON.stringify(state));
+};
+
+// //Function to load board state from localStorage
+const loadBoardState = () => {
+  const state = localStorage.getItem("boardState");
+  if (state) {
+    const parsedState = JSON.parse(state);
+    board.value = parsedState.board;
+    currentPlayer.value = parsedState.currentPlayer;
+  }
+};
+
+// //Load board state on mounted
+onMounted(() => {
+  loadBoardState();
+});
+
+// //Watch for changes in the board and save them
+watch([board, currentPlayer], saveBoardState);
 
 // Metod för att återställa brädet
 const resetBoard = () => {
