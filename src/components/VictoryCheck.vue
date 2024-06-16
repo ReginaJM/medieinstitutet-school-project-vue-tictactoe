@@ -20,6 +20,7 @@ interface IVictoryCheckProps {
   playerO: string;
   playerXrow: number[];
   playerOrow: number[];
+  totalMoves: number[];
 }
 const props = defineProps<IVictoryCheckProps>();
 
@@ -44,6 +45,7 @@ updateResults();
 const emit = defineEmits<{
     (e: "playerXVictory"): void;
     (e: "playerOVictory"): void;
+    (e: "itsATie"): void;
 }>()
 
 watch(() => props.playerXrow, (newVal) => {
@@ -59,6 +61,12 @@ watch(() => props.playerOrow, (newVal) => {
     emit('playerOVictory');
   }
 }, { immediate: true }); 
+
+watch(() => props.totalMoves, (newVal) => {
+  if (newVal.length === 9 && !resultPlayerX.value && !resultPlayerO.value) {
+    emit('itsATie');
+  }
+}, { immediate: true });
 
 
 

@@ -19,6 +19,7 @@ const gameOver = ref<boolean>(false);
 
 const playerXVictory = ref<boolean>(false);
 const playerOVictory = ref<boolean>(false);
+const tie = ref<boolean>(false);
 
 
 
@@ -102,21 +103,28 @@ const resetBoard = () => {
 const handlePlayerXVictory = () => {
   playerXVictory.value = true;
   addPointPlayerX();
-  gameOver.value = true; // Sätt gameOver till true när en spelare vinner
+  gameOver.value = true; 
   resetBoard();
 };
 
 const handlePlayerOVictory = () => {
    playerOVictory.value = true;
   addPointPlayerO();
-  gameOver.value = true; // Sätt gameOver till true när en spelare vinner
+  gameOver.value = true; 
   resetBoard();
+}
+
+const handleTie = () => {
+    tie.value = true;
+    gameOver.value = true; 
+    resetBoard();
 }
 
 const startNewGame = () => {
   resetBoard();
   playerXVictory.value = false;
   playerOVictory.value = false;
+  tie.value = false;
   gameOver.value = false; // Återställ gameOver här
   /* saveState(); */
 };
@@ -170,8 +178,10 @@ watch([playerX, playerO, playerXpoints, playerOpoints, playerXrow, playerOrow, t
             :playerO="playerO"
             :playerXrow="playerXrow"
             :playerOrow="playerOrow"
-            @playerXVictory="handlePlayerXVictory"
+            :totalMoves="totalMoves"
+            @playerXVictory="handlePlayerXVictory" 
             @playerOVictory="handlePlayerOVictory"
+            @itsATie="handleTie"
             
         />
 
@@ -179,7 +189,9 @@ watch([playerX, playerO, playerXpoints, playerOpoints, playerXrow, playerOrow, t
         <p>o tot {{ playerOpoints }}</p>
         <p v-if="playerXVictory">Player X - {{ playerX }} - you are the winner! &#129395;</p>
         <p v-if="playerOVictory">Player O - {{ playerO }} - you are the winner! &#129395;</p>
+        <p v-if="tie">It's a tie</p>
         <br>
+        
         <button @click="resetGame">Reset Game</button>
     </div>
 
