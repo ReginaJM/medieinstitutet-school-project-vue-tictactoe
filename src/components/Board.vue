@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
 import Square from "./Square.vue";
+import ScoreBoard from "./ScoreBoard.vue";
 
 const board = ref<string[]>(Array(9).fill(""));
 const currentPlayer = ref<string>("X");
+const showScoreBoard = ref<boolean>(false);
 /* const playerXrow = ref<string>("");
 const playerOrow = ref<string>(""); */
 
@@ -13,6 +15,8 @@ interface IBoardProps {
   playerX: string;
   playerO: string;
   gameOver: boolean;
+  playerXpoints: number;
+  playerOpoints: number;
 }
 // ta bort? används ej?
 const props = defineProps<IBoardProps>();
@@ -21,6 +25,7 @@ const props = defineProps<IBoardProps>();
 const emit = defineEmits<{
   (e: "square-click", playerAndIndex: { index: number; player: string }): void;
   (e: "clear-board"): void;
+  (e: "show-score"):void;
 }>();
 
 
@@ -77,33 +82,94 @@ const resetBoard = () => {
   emit("clear-board");
 };
 
+const toggleScoreBoard = () => {
+  showScoreBoard.value = !showScoreBoard.value;
+  emit("show-score");
+};
+
 </script>
+
+<!-- <template>
+    <div class="container">
+        <h1>Tic Tac Toe</h1>
+        <div v-if="!showScoreBoard"></div>
+            <div :class="{ hidden: props.gameOver }">
+                <p v-if="currentPlayer === 'X'">
+                Player {{ currentPlayer }} - {{ playerX }}, you're up!
+                </p>
+                <p v-else>Player {{ currentPlayer }} - {{ playerO }}, you're up!</p> 
+            </div>
+
+            <div class="game-board">
+                <Square
+                    v-for="(square, index) in board"
+                    :index="index"
+                    :value="square"
+                    @square-click="handleSquareClick"
+                    
+                />
+            </div>
+            <br>
+            <button @click="toggleScoreBoard">Show score</button>
+            <button v-if="gameOver" @click="resetBoard">Play again</button>
+
+        </div>
+
+        <div v-else>
+            <ScoreBoard 
+            :playerXpoints="props.playerXpoints"
+            :playerOpoints="props.playerOpoints"
+            />
+
+            <button @click="toggleScoreBoard">Back to game</button>
+
+
+        </div>
+
+
+    
+        
+    </div>
+</template> -->
 
 <template>
     <div class="container">
-        <h1>Tic Tac Toe</h1>
+      <h1>Tic Tac Toe</h1>
+      
+      <div v-if="!showScoreBoard">
         <div :class="{ hidden: props.gameOver }">
-            <p v-if="currentPlayer === 'X'">
-            Player {{ currentPlayer }} - {{ playerX }}, you're up!
-            </p>
-            <p v-else>Player {{ currentPlayer }} - {{ playerO }}, you're up!</p> 
+          <p v-if="currentPlayer === 'X'">
+            Player {{ currentPlayer }} - {{ props.playerX }}, you're up!
+          </p>
+          <p v-else>
+            Player {{ currentPlayer }} - {{ props.playerO }}, you're up!
+          </p>
         </div>
-
+  
         <div class="game-board">
-            <Square
-                v-for="(square, index) in board"
-                :index="index"
-                :value="square"
-                @square-click="handleSquareClick"
-                
-            />
+          <Square
+            v-for="(square, index) in board"
+            :key="index"
+            :index="index"
+            :value="square"
+            @square-click="handleSquareClick"
+          />
         </div>
-    
+  
+        <button @click="toggleScoreBoard">Show score</button>
         <br>
-        <button>Show score</button>
-        <button v-if="gameOver" @click="resetBoard">Play again</button>
+        <button v-if="props.gameOver" @click="resetBoard">Play again</button>
+      </div>
+  
+      <div v-else>
+        <ScoreBoard 
+          :playerXpoints="props.playerXpoints"
+          :playerOpoints="props.playerOpoints"
+        />
+        <button @click="toggleScoreBoard">Back to game</button>
+      </div>
     </div>
-</template>
+  </template>
 
 <style scoped>
 

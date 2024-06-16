@@ -36,6 +36,9 @@ const saveState = () => {
     totalMoves: totalMoves.value,
     showPlayers: showPlayers.value,
     gameOver: gameOver.value,
+    playerXVictory: playerXVictory.value,
+    playerOVictory: playerOVictory.value,
+    tie: tie.value
   };
   localStorage.setItem("ticTacToeState", JSON.stringify(state));
 };
@@ -54,6 +57,9 @@ const loadState = () => {
     totalMoves.value = parsedState.totalMoves;
     showPlayers.value = parsedState.showPlayers;
     gameOver.value = parsedState.gameOver;
+    playerXVictory.value = parsedState.playerXVictory;
+    playerOVictory.value = parsedState.playerOVictory;
+    tie.value = parsedState.tie;
   }
 };
 
@@ -120,12 +126,17 @@ const handleTie = () => {
     resetBoard();
 }
 
+const handleShowScore = () => {
+
+}
+
+
 const startNewGame = () => {
   resetBoard();
   playerXVictory.value = false;
   playerOVictory.value = false;
   tie.value = false;
-  gameOver.value = false; // Återställ gameOver här
+  gameOver.value = false; 
   /* saveState(); */
 };
 
@@ -140,6 +151,9 @@ const resetGame = () => {
   totalMoves.value = [];
   showPlayers.value = true;
   gameOver.value = false;
+  playerXVictory.value = false;
+  playerOVictory.value = false;
+  tie.value = false;
 };
 
 // // Load state on mounted
@@ -148,7 +162,11 @@ onMounted(() => {
 });
 
 // //Watch for changes in the state and save them
-watch([playerX, playerO, playerXpoints, playerOpoints, playerXrow, playerOrow, totalMoves, showPlayers, gameOver], saveState);
+watch(
+    [playerX, playerO, playerXpoints, playerOpoints, playerXrow, playerOrow, totalMoves, 
+    showPlayers, gameOver, playerXVictory, playerOVictory, tie], 
+    saveState
+);
 
 
 
@@ -169,8 +187,11 @@ watch([playerX, playerO, playerXpoints, playerOpoints, playerXrow, playerOrow, t
             :playerX="playerX"
             :playerO="playerO"
             :gameOver="gameOver" 
+            :playerXpoints="playerXpoints"
+            :playerOpoints="playerOpoints"
             @square-click="updatePlayerRow" 
             @clear-board="startNewGame"
+            @show-score="handleShowScore"
         />
 
         <VictoryCheck v-for="(t, i) in totalMoves" :key="i"
@@ -185,10 +206,8 @@ watch([playerX, playerO, playerXpoints, playerOpoints, playerXrow, playerOrow, t
             
         />
 
-        <p>x tot {{ playerXpoints }}</p>
-        <p>o tot {{ playerOpoints }}</p>
-        <p v-if="playerXVictory">Player X - {{ playerX }} - you are the winner! &#129395;</p>
-        <p v-if="playerOVictory">Player O - {{ playerO }} - you are the winner! &#129395;</p>
+        <p v-if="playerXVictory">Player X - {{ playerX }} - you won this round! &#129395;</p>
+        <p v-if="playerOVictory">Player O - {{ playerO }} - you won this round! &#129395;</p>
         <p v-if="tie">It's a tie</p>
         <br>
         
@@ -221,6 +240,10 @@ watch([playerX, playerO, playerXpoints, playerOpoints, playerXrow, playerOrow, t
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 30px; 
+}
+
+.hidden {
+    visibility: hidden;
 }
 
 </style>
