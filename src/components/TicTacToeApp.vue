@@ -130,7 +130,6 @@ const handleShowScore = () => {
     playerXVictory.value = false;
     playerOVictory.value = false;
     tie.value = false;
-
 }
 
 
@@ -212,7 +211,6 @@ watch(
         <p v-if="playerXVictory">Player X - {{ playerX }}, you won this round! &#129395;</p>
         <p v-if="playerOVictory">Player O - {{ playerO }}, you won this round! &#129395;</p>
         <p v-if="tie">It's a tie</p>
-        <br>
         
         <button @click="resetGame">Reset Game</button>
     </div>
@@ -234,8 +232,8 @@ watch(
   max-width: 50%;
   text-align: center;
 
-  background-color: rgb(222, 233, 201);
-  border: solid 2px black;
+  background-color: #f7f4eb;
+  border: solid 2px #191710;
   border-radius: 40px; 
 
   position: absolute;

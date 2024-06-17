@@ -2,6 +2,9 @@
 import { ref, onMounted, watch } from "vue";
 import Square from "./Square.vue";
 import ScoreBoard from "./ScoreBoard.vue";
+import Wrapper from "./Wrapper.vue";
+
+
 
 const board = ref<string[]>(Array(9).fill(""));
 const currentPlayer = ref<string>("X");
@@ -93,6 +96,8 @@ const toggleScoreBoard = () => {
 
 
 <template>
+    
+    
     <div class="container">
         <h1>Tic Tac Toe</h1>
       
@@ -116,9 +121,11 @@ const toggleScoreBoard = () => {
                 />
             </div>
     
-            <button @click="toggleScoreBoard">Show score</button>
-            <br>
-            <button v-if="props.gameOver" @click="resetBoard">Play again</button>
+            <div class="buttons-container">
+                <button @click="toggleScoreBoard">Show score</button>
+                <button v-if="props.gameOver" @click="resetBoard">Play again</button>
+            </div>
+
         </div>
   
         <div v-else>
@@ -131,22 +138,34 @@ const toggleScoreBoard = () => {
             <button @click="toggleScoreBoard">Back to game</button>
         </div>
     </div>
-  </template>
+    
+    
+</template>
+
+
 
 <style scoped>
-
-p {
-    font-family: sans-serif
-} 
 
 .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* max-height: 50%; */
   text-align: center;
+}  
+
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
+
+p {
+    color: var(--vt-c-orange);
+}
+
 .game-board {
   display: grid;
   grid-template-columns: repeat(3, 100px);
@@ -158,11 +177,12 @@ p {
 .square {
   width: 100px;
   height: 100px;
-  background-color: #fff;
-  border: 2px solid #000;
+  background-color: #F9F7F1;
+  border: 1px solid var(--vt-c-darkbrown);
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: sans-serif;
   font-size: 2em;
   cursor: pointer;
   user-select: none;
@@ -172,7 +192,7 @@ p {
 }
 
 .square:hover {
-  background-color: #fdf5eb;
+  background-color: #D6C4A9;
 } 
 
 .square:active {

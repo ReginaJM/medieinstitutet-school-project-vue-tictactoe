@@ -1,0 +1,51 @@
+@import './variables.css';
+
+/* styling */
+
+body {
+    margin: 0 auto;
+}
+
+#app {
+    padding: 4rem;
+    h1 {
+        color: var(--vt-c-darkbrown);
+        font-size: 3rem;
+        margin-bottom: 3px;
+        font-family: "Rowdies", sans-serif;
+        font-weight: 300;
+    }
+
+    h2 {
+        color: var(--vt-c-brown);
+    }
+
+    p {
+        font-family: sans-serif;
+        color: var(--vt-c-darkbrown);
+    } 
+}
+
+button {
+    background-color: var(--vt-c-orange);
+    color: #F9F7F1;
+    border: solid, var(--vt-c-orange), 2px;
+    padding: 7px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.2s;
+    margin: 5px;
+}
+  
+button:hover {
+background-color: #F9F7F1;
+color: var(--vt-c-orange);
+border: solid, var(--vt-c-orange), 2px;
+}
+  
+button:active {
+background-color: var(--vt-c-orange);
+}
+
+
