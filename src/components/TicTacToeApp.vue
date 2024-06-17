@@ -127,6 +127,9 @@ const handleTie = () => {
 }
 
 const handleShowScore = () => {
+    playerXVictory.value = false;
+    playerOVictory.value = false;
+    tie.value = false;
 
 }
 
