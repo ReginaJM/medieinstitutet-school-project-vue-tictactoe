@@ -4,8 +4,6 @@ import Board from './Board.vue';
 import VictoryCheck from './VictoryCheck.vue';
 import { ref, onMounted, watch } from 'vue';
 
-
-
 const playerX = ref<string>("");
 const playerO = ref<string>("");
 const showPlayers = ref<boolean>(true);
@@ -21,10 +19,6 @@ const playerXVictory = ref<boolean>(false);
 const playerOVictory = ref<boolean>(false);
 const tie = ref<boolean>(false);
 
-
-
-
-// //Function to save state to localStorage
 const saveState = () => {
   const state = {
     playerX: playerX.value,
@@ -43,7 +37,6 @@ const saveState = () => {
   localStorage.setItem("ticTacToeState", JSON.stringify(state));
 };
 
-// //Function to load state from localStorage
 const loadState = () => {
   const state = localStorage.getItem("ticTacToeState");
   if (state) {
@@ -62,7 +55,6 @@ const loadState = () => {
     tie.value = parsedState.tie;
   };
 };
-
 
 const addPlayerNames = (player1: string, player2: string) => {
   playerX.value = player1
@@ -87,24 +79,18 @@ const addPointPlayerX = () => {
     playerXpoints.value += 1;
     saveState(); 
 };
+
 const addPointPlayerO = () => {
     playerOpoints.value += 1;
     saveState(); 
 };
 
-
-///
-
 const resetBoard = () => {
   playerXrow.value = [];
   playerOrow.value = [];
   totalMoves.value = [];
-  /* gameOver.value = false; // Återställ gameOver */
-  /* decideStartingPlayer(); */
   saveState(); 
 };
-
-
 
 const handlePlayerXVictory = () => {
   playerXVictory.value = true;
@@ -132,18 +118,16 @@ const handleShowScore = () => {
     tie.value = false;
 };
 
-
 const startNewGame = () => {
   resetBoard();
   playerXVictory.value = false;
   playerOVictory.value = false;
   tie.value = false;
   gameOver.value = false; 
-  /* saveState(); */
 };
 
 const resetGame = () => {
-  localStorage.clear(); // Tömmer localStorage
+  localStorage.clear();
   playerX.value = "";
   playerO.value = "";
   playerXpoints.value = 0;
@@ -158,34 +142,23 @@ const resetGame = () => {
   tie.value = false;
 };
 
-// // Load state on mounted
 onMounted(() => {
   loadState();
 });
 
-// //Watch for changes in the state and save them
 watch(
     [playerX, playerO, playerXpoints, playerOpoints, playerXrow, playerOrow, totalMoves, 
     showPlayers, gameOver, playerXVictory, playerOVictory, tie], 
     saveState
 );
 
-
-
-
 </script>
-
-
-
-
 <template>
     <div class="container-app">
 
         <Players v-if="showPlayers" 
             @send-players="addPlayerNames"
         />
-
-
 
         <Board v-else 
             :playerX="playerX"
@@ -197,8 +170,6 @@ watch(
             @clear-board="startNewGame"
             @show-score="handleShowScore"
         />
-
-
 
         <VictoryCheck v-for="(t, i) in totalMoves" :key="i"
             :playerX="playerX"
@@ -217,16 +188,9 @@ watch(
 
         <button v-if="!showPlayers" @click="resetGame">Reset Game</button>
     </div>
-
 </template>
 
-
-
-
 <style scoped>
-
-
-
 .container-app {
   display: flex;
   flex-direction: column;
@@ -250,5 +214,4 @@ watch(
 .hidden {
     visibility: hidden;
 }
-
 </style>

@@ -2,62 +2,49 @@
 import { ref, onMounted, watch } from "vue";
 import Square from "./Square.vue";
 import ScoreBoard from "./ScoreBoard.vue";
-import Wrapper from "./Wrapper.vue";
-
-
 
 const board = ref<string[]>(Array(9).fill(""));
 const currentPlayer = ref<string>("X");
 const showScoreBoard = ref<boolean>(false);
-/* const playerXrow = ref<string>("");
-const playerOrow = ref<string>(""); */
 
-// Det barnet vill ha av föräldern
-// ta bort playerX och playerO? används ej?
 interface IBoardProps {
   playerX: string;
   playerO: string;
   gameOver: boolean;
   playerXpoints: number;
   playerOpoints: number;
-};
-// ta bort? används ej?
+}
+
 const props = defineProps<IBoardProps>();
 
-// Det barnet ska skicka till föräldern
 const emit = defineEmits<{
   (e: "square-click", playerAndIndex: { index: number; player: string }): void;
   (e: "clear-board"): void;
-  (e: "show-score"):void;
+  (e: "show-score"): void;
 }>();
-
 
 const handleSquareClick = (index: number) => {
   if (board.value[index] === "" && !props.gameOver) {
     emit("square-click", { index, player: currentPlayer.value });
     board.value[index] = currentPlayer.value;
     currentPlayer.value = currentPlayer.value === "X" ? "O" : "X";
-    saveBoardState(); 
+    saveBoardState();
   }
 };
 
-// Funktion för att slumpa fram den aktuella spelaren
 const decideStartingPlayer = () => {
-  currentPlayer.value = Math.random() < 0.5 ? 'X' : 'O';
+  currentPlayer.value = Math.random() < 0.5 ? "X" : "O";
 };
 
-
-// //Function to save board state to localStorage
 const saveBoardState = () => {
   const state = {
     board: board.value,
     currentPlayer: currentPlayer.value,
-    showScoreBoard: showScoreBoard.value
+    showScoreBoard: showScoreBoard.value,
   };
   localStorage.setItem("boardState", JSON.stringify(state));
 };
 
-// //Function to load board state from localStorage
 const loadBoardState = () => {
   const state = localStorage.getItem("boardState");
   if (state) {
@@ -70,19 +57,15 @@ const loadBoardState = () => {
   }
 };
 
-// //Load board state on mounted
 onMounted(() => {
   loadBoardState();
 });
 
-// //Watch for changes in the board and save them
 watch([board, currentPlayer, showScoreBoard], saveBoardState);
 
-
-// Metod för att återställa brädet
 const resetBoard = () => {
   board.value = Array(9).fill("");
-  decideStartingPlayer(); 
+  decideStartingPlayer();
   saveBoardState();
   emit("clear-board");
 };
@@ -91,16 +74,12 @@ const toggleScoreBoard = () => {
   showScoreBoard.value = !showScoreBoard.value;
   emit("show-score");
 };
-
 </script>
 
-
 <template>
-    
-    
     <div class="container">
         <h1>Tic Tac Toe</h1>
-      
+
         <div v-if="!showScoreBoard">
             <div :class="{ hidden: props.gameOver }">
                 <p v-if="currentPlayer === 'X'">
@@ -110,60 +89,54 @@ const toggleScoreBoard = () => {
                     Player {{ currentPlayer }} - {{ props.playerO }}, you're up!
                 </p>
             </div>
-    
+
             <div class="game-board">
                 <Square
-                    v-for="(square, index) in board"
-                    :key="index"
-                    :index="index"
-                    :value="square"
-                    @square-click="handleSquareClick"
+                v-for="(square, index) in board"
+                :key="index"
+                :index="index"
+                :value="square"
+                @square-click="handleSquareClick"
                 />
             </div>
-    
+
             <div class="buttons-container">
                 <button @click="toggleScoreBoard">Show score</button>
                 <button v-if="props.gameOver" @click="resetBoard">Play again</button>
             </div>
-
         </div>
-  
+
         <div v-else>
-            <ScoreBoard 
-            :playerXpoints="props.playerXpoints"
-            :playerOpoints="props.playerOpoints"
-            :playerX="props.playerX"
-            :playerO="props.playerO"
+            <ScoreBoard
+                :playerXpoints="props.playerXpoints"
+                :playerOpoints="props.playerOpoints"
+                :playerX="props.playerX"
+                :playerO="props.playerO"
             />
-            <button @click="toggleScoreBoard">Back to game</button>
+        <button @click="toggleScoreBoard">Back to game</button>
         </div>
     </div>
-    
-    
 </template>
 
-
-
 <style scoped>
-
 .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-}  
+}
 
 .buttons-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 p {
-    color: var(--vt-c-orange);
+  color: var(--vt-c-orange);
 }
 
 .game-board {
@@ -177,7 +150,7 @@ p {
 .square {
   max-width: 100px auto;
   max-height: 100px;
-  background-color: #F9F7F1;
+  background-color: #f9f7f1;
   border: 1px solid var(--vt-c-darkbrown);
   display: flex;
   justify-content: center;
@@ -186,18 +159,18 @@ p {
   font-size: 2em;
   cursor: pointer;
   user-select: none;
-  border-radius: 25px; /* Rundade hörn */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Drop-shadow */
-  transition: transform 0.1s ease, box-shadow 0.1s ease; /* Animering vid klick */
+  border-radius: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
 .square:hover {
-  background-color: #D6C4A9;
-} 
+  background-color: #d6c4a9;
+}
 
 .square:active {
-  transform: translateY(2px); /* Tryck ned cellen */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Mindre skugga vid tryck */
+  transform: translateY(2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .hidden {

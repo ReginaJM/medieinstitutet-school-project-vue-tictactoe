@@ -4,16 +4,11 @@ import { ref } from "vue";
 const playerX = ref("");
 const playerO = ref("");
 
-// emit, SKAPA händelser
 const emit = defineEmits<{
   (e: "sendPlayers", playerX: string, playerO: string): void;
 }>();
 
 const handleSubmit = () => {
-  // console log
-  console.log("submit", playerX.value, playerO.value);
-
-  // emit, SÄTTA IGÅNG händelsen
   emit("sendPlayers", playerX.value, playerO.value);
   playerX.value = "";
   playerO.value = "";
@@ -44,5 +39,4 @@ const handleSubmit = () => {
   align-items: center;
   text-align: center;
 }
-
 </style>

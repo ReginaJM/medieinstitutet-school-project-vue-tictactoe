@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-
+import { ref, watch } from "vue";
 
 const correctRows: number[][] = [
   [0, 1, 2],
@@ -10,26 +9,26 @@ const correctRows: number[][] = [
   [1, 4, 7],
   [2, 5, 8],
   [0, 4, 8],
-  [2, 4, 6]
+  [2, 4, 6],
 ];
 
-
-// Det barnet vill ha av föräldern
 interface IVictoryCheckProps {
   playerX: string;
   playerO: string;
   playerXrow: number[];
   playerOrow: number[];
   totalMoves: number[];
-};
+}
 
 const props = defineProps<IVictoryCheckProps>();
 
-
-const checkVictory = (correctRows: number[][], playerRow: number[]): boolean => {
-    return correctRows.some(correctRow =>
-        correctRow.every(element => playerRow.includes(element))
-    );
+const checkVictory = (
+  correctRows: number[][],
+  playerRow: number[]
+): boolean => {
+  return correctRows.some((correctRow) =>
+    correctRow.every((element) => playerRow.includes(element))
+  );
 };
 
 const resultPlayerX = ref<boolean>(false);
@@ -41,48 +40,45 @@ const updateResults = () => {
 };
 updateResults();
 
-
-
 const emit = defineEmits<{
-    (e: "playerXVictory"): void;
-    (e: "playerOVictory"): void;
-    (e: "itsATie"): void;
+  (e: "playerXVictory"): void;
+  (e: "playerOVictory"): void;
+  (e: "itsATie"): void;
 }>();
 
-watch(() => props.playerXrow, (newVal) => {
-  const resultPlayerX = checkVictory(correctRows, newVal);
-  if (resultPlayerX) {
-    emit('playerXVictory');
-  }
-}, { immediate: true });
+watch(
+  () => props.playerXrow,
+  (newVal) => {
+    const resultPlayerX = checkVictory(correctRows, newVal);
+    if (resultPlayerX) {
+      emit("playerXVictory");
+    }
+  },
+  { immediate: true }
+);
 
-watch(() => props.playerOrow, (newVal) => {
-  const resultPlayerO = checkVictory(correctRows, newVal);
-  if (resultPlayerO) {
-    emit('playerOVictory');
-  }
-}, { immediate: true }); 
+watch(
+  () => props.playerOrow,
+  (newVal) => {
+    const resultPlayerO = checkVictory(correctRows, newVal);
+    if (resultPlayerO) {
+      emit("playerOVictory");
+    }
+  },
+  { immediate: true }
+);
 
-watch(() => props.totalMoves, (newVal) => {
-  if (newVal.length === 9 && !resultPlayerX.value && !resultPlayerO.value) {
-    emit('itsATie');
-  }
-}, { immediate: true });
-
-
-
-
+watch(
+  () => props.totalMoves,
+  (newVal) => {
+    if (newVal.length === 9 && !resultPlayerX.value && !resultPlayerO.value) {
+      emit("itsATie");
+    }
+  },
+  { immediate: true }
+);
 </script>
 
+<template></template>
 
-
-
-
-<template>
-
-</template>
-
-
-<style scoped>
-
-</style>
+<style scoped></style>
