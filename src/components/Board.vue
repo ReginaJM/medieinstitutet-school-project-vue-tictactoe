@@ -125,6 +125,8 @@ const toggleScoreBoard = () => {
             <ScoreBoard 
             :playerXpoints="props.playerXpoints"
             :playerOpoints="props.playerOpoints"
+            :playerX="props.playerX"
+            :playerO="props.playerO"
             />
             <button @click="toggleScoreBoard">Back to game</button>
         </div>

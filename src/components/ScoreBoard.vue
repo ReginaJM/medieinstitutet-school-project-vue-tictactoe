@@ -8,6 +8,8 @@ import { ref, onMounted, watch } from 'vue';
 interface IScoreBoardProps {
   playerXpoints: number;
   playerOpoints: number;
+  playerX: string;
+  playerO: string;
 }
 
 const props = defineProps<IScoreBoardProps>();
@@ -45,8 +47,8 @@ watch([playerXpoints, playerOpoints], savePointsToLocalStorage);
 
 <template>
     <h2>Score board</h2>
-    <p>Player X score: {{ playerXpoints }}</p>
-    <p>Player O score: {{ playerOpoints }}</p>
+    <p>Player X - {{ playerX }}, score: {{ playerXpoints }}</p>
+    <p>Player O - {{ playerO }}, score: {{ playerOpoints }}</p>
 
 
 </template>
