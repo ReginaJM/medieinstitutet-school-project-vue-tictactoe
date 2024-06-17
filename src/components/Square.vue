@@ -32,11 +32,6 @@ const handleClick = () => {
 </template>
 
 
-
-
-
-
-
 <style scoped>
 
 </style>

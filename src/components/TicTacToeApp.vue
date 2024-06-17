@@ -233,6 +233,7 @@ watch(
   justify-content: center;
   align-items: center;
   max-width: 50%;
+  min-width: 300px;
   text-align: center;
 
   background-color: #f7f4eb;

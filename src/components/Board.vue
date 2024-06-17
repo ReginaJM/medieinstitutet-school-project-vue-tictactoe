@@ -175,8 +175,8 @@ p {
 }
 
 .square {
-  width: 100px;
-  height: 100px;
+  max-width: 100px auto;
+  max-height: 100px;
   background-color: #F9F7F1;
   border: 1px solid var(--vt-c-darkbrown);
   display: flex;
