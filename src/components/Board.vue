@@ -48,7 +48,8 @@ const decideStartingPlayer = () => {
 const saveBoardState = () => {
   const state = {
     board: board.value,
-    currentPlayer: currentPlayer.value
+    currentPlayer: currentPlayer.value,
+    showScoreBoard: showScoreBoard.value
   };
   localStorage.setItem("boardState", JSON.stringify(state));
 };
@@ -60,6 +61,7 @@ const loadBoardState = () => {
     const parsedState = JSON.parse(state);
     board.value = parsedState.board;
     currentPlayer.value = parsedState.currentPlayer;
+    showScoreBoard.value = parsedState.showScoreBoard;
   } else {
     decideStartingPlayer();
   }
@@ -71,7 +73,7 @@ onMounted(() => {
 });
 
 // //Watch for changes in the board and save them
-watch([board, currentPlayer], saveBoardState);
+watch([board, currentPlayer, showScoreBoard], saveBoardState);
 
 
 // Metod för att återställa brädet
@@ -89,85 +91,43 @@ const toggleScoreBoard = () => {
 
 </script>
 
-<!-- <template>
+
+<template>
     <div class="container">
         <h1>Tic Tac Toe</h1>
-        <div v-if="!showScoreBoard"></div>
+      
+        <div v-if="!showScoreBoard">
             <div :class="{ hidden: props.gameOver }">
                 <p v-if="currentPlayer === 'X'">
-                Player {{ currentPlayer }} - {{ playerX }}, you're up!
+                    Player {{ currentPlayer }} - {{ props.playerX }}, you're up!
                 </p>
-                <p v-else>Player {{ currentPlayer }} - {{ playerO }}, you're up!</p> 
+                <p v-else>
+                    Player {{ currentPlayer }} - {{ props.playerO }}, you're up!
+                </p>
             </div>
-
+    
             <div class="game-board">
                 <Square
                     v-for="(square, index) in board"
+                    :key="index"
                     :index="index"
                     :value="square"
                     @square-click="handleSquareClick"
-                    
                 />
             </div>
-            <br>
+    
             <button @click="toggleScoreBoard">Show score</button>
-            <button v-if="gameOver" @click="resetBoard">Play again</button>
-
+            <br>
+            <button v-if="props.gameOver" @click="resetBoard">Play again</button>
         </div>
-
+  
         <div v-else>
             <ScoreBoard 
             :playerXpoints="props.playerXpoints"
             :playerOpoints="props.playerOpoints"
             />
-
             <button @click="toggleScoreBoard">Back to game</button>
-
-
         </div>
-
-
-    
-        
-    </div>
-</template> -->
-
-<template>
-    <div class="container">
-      <h1>Tic Tac Toe</h1>
-      
-      <div v-if="!showScoreBoard">
-        <div :class="{ hidden: props.gameOver }">
-          <p v-if="currentPlayer === 'X'">
-            Player {{ currentPlayer }} - {{ props.playerX }}, you're up!
-          </p>
-          <p v-else>
-            Player {{ currentPlayer }} - {{ props.playerO }}, you're up!
-          </p>
-        </div>
-  
-        <div class="game-board">
-          <Square
-            v-for="(square, index) in board"
-            :key="index"
-            :index="index"
-            :value="square"
-            @square-click="handleSquareClick"
-          />
-        </div>
-  
-        <button @click="toggleScoreBoard">Show score</button>
-        <br>
-        <button v-if="props.gameOver" @click="resetBoard">Play again</button>
-      </div>
-  
-      <div v-else>
-        <ScoreBoard 
-          :playerXpoints="props.playerXpoints"
-          :playerOpoints="props.playerOpoints"
-        />
-        <button @click="toggleScoreBoard">Back to game</button>
-      </div>
     </div>
   </template>
 

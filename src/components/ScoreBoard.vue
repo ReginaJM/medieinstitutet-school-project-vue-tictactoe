@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-
+import { ref, onMounted, watch } from 'vue';
 
 
 
@@ -11,6 +11,33 @@ interface IScoreBoardProps {
 }
 
 const props = defineProps<IScoreBoardProps>();
+
+const playerXpoints = ref<number>(props.playerXpoints);
+const playerOpoints = ref<number>(props.playerOpoints);
+
+const savePointsToLocalStorage = () => {
+  localStorage.setItem('playerXpoints', playerXpoints.value.toString());
+  localStorage.setItem('playerOpoints', playerOpoints.value.toString());
+};
+
+const loadPointsFromLocalStorage = () => {
+  const storedPlayerXpoints = localStorage.getItem('playerXpoints');
+  const storedPlayerOpoints = localStorage.getItem('playerOpoints');
+
+  if (storedPlayerXpoints !== null) {
+    playerXpoints.value = parseInt(storedPlayerXpoints, 10);
+  }
+  if (storedPlayerOpoints !== null) {
+    playerOpoints.value = parseInt(storedPlayerOpoints, 10);
+  }
+};
+
+onMounted(() => {
+  loadPointsFromLocalStorage();
+});
+
+// Spara poäng när de ändras
+watch([playerXpoints, playerOpoints], savePointsToLocalStorage);
 
 
 </script>
