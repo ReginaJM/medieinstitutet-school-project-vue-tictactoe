@@ -21,7 +21,8 @@ interface IVictoryCheckProps {
   playerXrow: number[];
   playerOrow: number[];
   totalMoves: number[];
-}
+};
+
 const props = defineProps<IVictoryCheckProps>();
 
 
@@ -29,7 +30,7 @@ const checkVictory = (correctRows: number[][], playerRow: number[]): boolean => 
     return correctRows.some(correctRow =>
         correctRow.every(element => playerRow.includes(element))
     );
-}
+};
 
 const resultPlayerX = ref<boolean>(false);
 const resultPlayerO = ref<boolean>(false);
@@ -37,7 +38,7 @@ const resultPlayerO = ref<boolean>(false);
 const updateResults = () => {
   resultPlayerX.value = checkVictory(correctRows, props.playerXrow);
   resultPlayerO.value = checkVictory(correctRows, props.playerOrow);
-}
+};
 updateResults();
 
 
@@ -46,7 +47,7 @@ const emit = defineEmits<{
     (e: "playerXVictory"): void;
     (e: "playerOVictory"): void;
     (e: "itsATie"): void;
-}>()
+}>();
 
 watch(() => props.playerXrow, (newVal) => {
   const resultPlayerX = checkVictory(correctRows, newVal);

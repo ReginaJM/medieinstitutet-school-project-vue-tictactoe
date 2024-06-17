@@ -10,7 +10,7 @@ interface IScoreBoardProps {
   playerOpoints: number;
   playerX: string;
   playerO: string;
-}
+};
 
 const props = defineProps<IScoreBoardProps>();
 

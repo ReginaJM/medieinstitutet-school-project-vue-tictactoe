@@ -60,7 +60,7 @@ const loadState = () => {
     playerXVictory.value = parsedState.playerXVictory;
     playerOVictory.value = parsedState.playerOVictory;
     tie.value = parsedState.tie;
-  }
+  };
 };
 
 
@@ -80,7 +80,7 @@ const updatePlayerRow = (playerAndIndex: { index: number; player: string }) => {
             playerOrow.value.push(playerAndIndex.index)
         }
         saveState(); 
-    }
+    };
 };
 
 const addPointPlayerX = () => {
@@ -118,19 +118,19 @@ const handlePlayerOVictory = () => {
   addPointPlayerO();
   gameOver.value = true; 
   resetBoard();
-}
+};
 
 const handleTie = () => {
     tie.value = true;
     gameOver.value = true; 
     resetBoard();
-}
+};
 
 const handleShowScore = () => {
     playerXVictory.value = false;
     playerOVictory.value = false;
     tie.value = false;
-}
+};
 
 
 const startNewGame = () => {
@@ -185,6 +185,8 @@ watch(
             @send-players="addPlayerNames"
         />
 
+
+
         <Board v-else 
             :playerX="playerX"
             :playerO="playerO"
@@ -196,6 +198,8 @@ watch(
             @show-score="handleShowScore"
         />
 
+
+
         <VictoryCheck v-for="(t, i) in totalMoves" :key="i"
             :playerX="playerX"
             :playerO="playerO"
@@ -204,14 +208,13 @@ watch(
             :totalMoves="totalMoves"
             @playerXVictory="handlePlayerXVictory" 
             @playerOVictory="handlePlayerOVictory"
-            @itsATie="handleTie"
-            
+            @itsATie="handleTie"  
         />
 
         <p v-if="playerXVictory">Player X - {{ playerX }}, you won this round! &#129395;</p>
         <p v-if="playerOVictory">Player O - {{ playerO }}, you won this round! &#129395;</p>
         <p v-if="tie">It's a tie</p>
-        
+
         <button @click="resetGame">Reset Game</button>
     </div>
 

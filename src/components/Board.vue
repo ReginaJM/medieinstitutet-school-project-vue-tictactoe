@@ -20,7 +20,7 @@ interface IBoardProps {
   gameOver: boolean;
   playerXpoints: number;
   playerOpoints: number;
-}
+};
 // ta bort? används ej?
 const props = defineProps<IBoardProps>();
 

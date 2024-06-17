@@ -6,7 +6,7 @@ interface ISquareProps {
     index: number;
     value: string;
     /* currentPlayer: string; */
-}
+};
 
 const props = defineProps<ISquareProps>();
 
