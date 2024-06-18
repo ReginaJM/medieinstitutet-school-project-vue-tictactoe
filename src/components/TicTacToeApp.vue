@@ -190,7 +190,7 @@ watch(
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .container-app {
   display: flex;
   flex-direction: column;

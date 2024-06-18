@@ -45,7 +45,7 @@ watch([playerXpoints, playerOpoints], savePointsToLocalStorage);
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .scores {
   margin-bottom: 40px;
 }

@@ -23,4 +23,34 @@ const handleClick = () => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+
+.square {
+    max-width: 100px auto;
+    max-height: 100px;
+    background-color: #f9f7f1;
+    border: 1px solid var(--vt-c-darkbrown);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+    font-size: 2em;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.square:hover {
+    background-color: #d6c4a9;
+}
+
+.square:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+</style>

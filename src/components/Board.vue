@@ -93,7 +93,6 @@ const toggleScoreBoard = () => {
             <div class="game-board">
                 <Square
                 v-for="(square, index) in board"
-                :key="index"
                 :index="index"
                 :value="square"
                 @square-click="handleSquareClick"
@@ -118,59 +117,33 @@ const toggleScoreBoard = () => {
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 
-.buttons-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+    p {
+    color: var(--vt-c-orange);
+    }
 
-p {
-  color: var(--vt-c-orange);
-}
+    .game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 10px;
+    margin-bottom: 20px;
+    }
 
-.game-board {
-  display: grid;
-  grid-template-columns: repeat(3, 100px);
-  grid-template-rows: repeat(3, 100px);
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.square {
-  max-width: 100px auto;
-  max-height: 100px;
-  background-color: #f9f7f1;
-  border: 1px solid var(--vt-c-darkbrown);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: sans-serif;
-  font-size: 2em;
-  cursor: pointer;
-  user-select: none;
-  border-radius: 25px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
-}
-
-.square:hover {
-  background-color: #d6c4a9;
-}
-
-.square:active {
-  transform: translateY(2px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    .buttons-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    }
 }
 
 .hidden {

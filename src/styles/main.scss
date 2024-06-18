@@ -1,6 +1,4 @@
-@import './variables.css';
-
-/* styling */
+@import './partials/variables';
 
 body {
     margin: 0 auto;
@@ -30,6 +28,11 @@ body {
         margin-top: 20px;
         input {
             margin-bottom: 20px;
+            border: solid var(--vt-c-darkbrown) 1px;
+            border-radius: 10px;
+            color: var(--vt-c-orange);
+            padding-left: 10px;
+            width: 150px;
         }
     }
 }
@@ -45,15 +48,19 @@ button {
     transition: background-color 0.2s;
     margin: 5px;
 }
-  
+
 button:hover {
-background-color: #F9F7F1;
-color: var(--vt-c-orange);
-border: solid, var(--vt-c-orange), 2px;
+    background-color: #F9F7F1;
+    color: var(--vt-c-orange);
+    border: solid, var(--vt-c-orange), 2px;
+}
+
+button:active {
+    background-color: var(--vt-c-orange);
 }
   
-button:active {
-background-color: var(--vt-c-orange);
-}
+
+  
+
 
 
