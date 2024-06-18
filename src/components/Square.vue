@@ -28,7 +28,7 @@ const handleClick = () => {
 .square {
     max-width: 100px auto;
     max-height: 100px;
-    background-color: #f9f7f1;
+    background-color: var(--vt-c-white);
     border: 1px solid var(--vt-c-darkbrown);
     display: flex;
     justify-content: center;
@@ -43,7 +43,7 @@ const handleClick = () => {
 }
 
 .square:hover {
-    background-color: #d6c4a9;
+    background-color: var(--vt-c-lightbrown);
 }
 
 .square:active {

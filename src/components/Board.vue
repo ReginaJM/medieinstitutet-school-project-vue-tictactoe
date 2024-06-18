@@ -2,6 +2,7 @@
 import { ref, onMounted, watch } from "vue";
 import Square from "./Square.vue";
 import ScoreBoard from "./ScoreBoard.vue";
+/* import { useVictoryCheck, IVictoryCheckProps } from "../utils/victoryCheck.js"; */
 
 const board = ref<string[]>(Array(9).fill(""));
 const currentPlayer = ref<string>("X");
@@ -21,7 +22,16 @@ const emit = defineEmits<{
   (e: "square-click", playerAndIndex: { index: number; player: string }): void;
   (e: "clear-board"): void;
   (e: "show-score"): void;
+/*   (e: "playerXVictory"): void;
+  (e: "playerOVictory"): void;
+  (e: "itsATie"): void; */
 }>();
+
+const playerXrow = ref<number[]>([]);
+const playerOrow = ref<number[]>([]);
+const totalMoves = ref<number[]>([]);
+
+/* type VictoryEvent = "playerXVictory" | "playerOVictory" | "itsATie"; */
 
 const handleSquareClick = (index: number) => {
   if (board.value[index] === "" && !props.gameOver) {
@@ -30,7 +40,37 @@ const handleSquareClick = (index: number) => {
     currentPlayer.value = currentPlayer.value === "X" ? "O" : "X";
     saveBoardState();
   }
-};
+}; 
+
+/* const handleSquareClick = (index: number) => {
+  if (board.value[index] === "" && !props.gameOver) {
+    emit("square-click", { index, player: currentPlayer.value });
+    board.value[index] = currentPlayer.value;
+
+    if (currentPlayer.value === "X") {
+      playerXrow.value.push(index);
+    } else {
+      playerOrow.value.push(index);
+    }
+
+    totalMoves.value.push(index);
+    currentPlayer.value = currentPlayer.value === "X" ? "O" : "X";
+
+    const victoryCheckProps: IVictoryCheckProps = {
+      playerX: props.playerX,
+      playerO: props.playerO,
+      playerXrow: playerXrow.value,
+      playerOrow: playerOrow.value,
+      totalMoves: totalMoves.value,
+    };
+
+    useVictoryCheck(victoryCheckProps, (event: VictoryEvent) => {
+      emit(event);
+    });
+
+    saveBoardState();
+  }
+}; */
 
 const decideStartingPlayer = () => {
   currentPlayer.value = Math.random() < 0.5 ? "X" : "O";
@@ -41,6 +81,9 @@ const saveBoardState = () => {
     board: board.value,
     currentPlayer: currentPlayer.value,
     showScoreBoard: showScoreBoard.value,
+    playerXrow: playerXrow.value,
+    playerOrow: playerOrow.value,
+    totalMoves: totalMoves.value,
   };
   localStorage.setItem("boardState", JSON.stringify(state));
 };
@@ -52,6 +95,9 @@ const loadBoardState = () => {
     board.value = parsedState.board;
     currentPlayer.value = parsedState.currentPlayer;
     showScoreBoard.value = parsedState.showScoreBoard;
+    playerXrow.value = parsedState.playerXrow;
+    playerOrow.value = parsedState.playerOrow;
+    totalMoves.value = parsedState.totalMoves;
   } else {
     decideStartingPlayer();
   }
@@ -61,10 +107,13 @@ onMounted(() => {
   loadBoardState();
 });
 
-watch([board, currentPlayer, showScoreBoard], saveBoardState);
+watch([board, currentPlayer, showScoreBoard, playerXrow, playerOrow, totalMoves], saveBoardState);
 
 const resetBoard = () => {
   board.value = Array(9).fill("");
+  playerXrow.value = [];
+  playerOrow.value = [];
+  totalMoves.value = [];
   decideStartingPlayer();
   saveBoardState();
   emit("clear-board");
@@ -82,10 +131,10 @@ const toggleScoreBoard = () => {
 
         <div v-if="!showScoreBoard">
             <div :class="{ hidden: props.gameOver }">
-                <p v-if="currentPlayer === 'X'">
+                <p class="whos-up-text" v-if="currentPlayer === 'X'">
                     Player {{ currentPlayer }} - {{ props.playerX }}, you're up!
                 </p>
-                <p v-else>
+                <p class="whos-up-text" v-else>
                     Player {{ currentPlayer }} - {{ props.playerO }}, you're up!
                 </p>
             </div>
@@ -125,9 +174,7 @@ const toggleScoreBoard = () => {
     align-items: center;
     text-align: center;
 
-    p {
-    color: var(--vt-c-orange);
-    }
+
 
     .game-board {
     display: grid;
@@ -144,6 +191,11 @@ const toggleScoreBoard = () => {
     align-items: center;
     text-align: center;
     }
+}
+
+.whos-up-text {
+    color: var(--vt-c-orange);
+    font-size: 1.1rem;
 }
 
 .hidden {

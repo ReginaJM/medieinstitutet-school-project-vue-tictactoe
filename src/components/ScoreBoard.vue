@@ -38,15 +38,35 @@ watch([playerXpoints, playerOpoints], savePointsToLocalStorage);
 </script>
 
 <template>
-  <h2>Score board</h2>
-  <div class="scores">
-    <p>Player X - {{ playerX }}: {{ playerXpoints }}</p>
-    <p>Player O - {{ playerO }}: {{ playerOpoints }}</p>
-  </div>
+    <div class="score-board">
+        <h2>Score board</h2>
+        <div class="scores">
+            <p>Player X - {{ playerX }}: {{ playerXpoints }}</p>
+            <p>Player O - {{ playerO }}: {{ playerOpoints }}</p>
+        </div>
+    </div>
+
 </template>
 
 <style scoped lang="scss">
-.scores {
-  margin-bottom: 40px;
+
+.score-board {
+    background-color: var(--vt-c-white);
+    border: solid 2px var(--vt-c-darkbrown);
+    border-radius: 40px; 
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 40px;
+
+    h2 {
+        margin: 0;
+    }
+    
+    .p {
+        color: var(--vt-c-darkbrown);
+    }
 }
+
+
+
 </style>

@@ -162,16 +162,17 @@ watch(
 
         <Board v-else 
             :playerX="playerX"
-            :playerO="playerO"
+            :playerO="playerO" 
             :gameOver="gameOver" 
             :playerXpoints="playerXpoints"
             :playerOpoints="playerOpoints"
             @square-click="updatePlayerRow" 
             @clear-board="startNewGame"
             @show-score="handleShowScore"
+
         />
 
-        <VictoryCheck v-for="(t, i) in totalMoves" :key="i"
+         <VictoryCheck v-for="(t, i) in totalMoves" :key="i"
             :playerX="playerX"
             :playerO="playerO"
             :playerXrow="playerXrow"
@@ -180,7 +181,7 @@ watch(
             @playerXVictory="handlePlayerXVictory" 
             @playerOVictory="handlePlayerOVictory"
             @itsATie="handleTie"  
-        />
+        /> 
 
         <p v-if="playerXVictory">Player X - {{ playerX }}, you won this round! &#129395;</p>
         <p v-if="playerOVictory">Player O - {{ playerO }}, you won this round! &#129395;</p>
@@ -200,8 +201,8 @@ watch(
   min-width: 300px;
   text-align: center;
 
-  background-color: #f7f4eb;
-  border: solid 2px #191710;
+  background-color: var(--vt-c-beige);
+  border: solid 2px var(--vt-c-darkbrown);
   border-radius: 40px; 
 
   position: absolute;
@@ -209,6 +210,10 @@ watch(
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 30px; 
+}
+
+.p {
+    color: var(--vt-c-darkbrown);
 }
 
 .hidden {
