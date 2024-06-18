@@ -186,7 +186,7 @@ watch(
         <p v-if="playerOVictory">Player O - {{ playerO }}, you won this round! &#129395;</p>
         <p v-if="tie">It's a tie! &#128074</p>
 
-        <button v-if="!showPlayers" @click="resetGame">Reset Game</button>
+        <button class="resetBtn"v-if="!showPlayers" @click="resetGame">Reset Game</button>
     </div>
 </template>
 

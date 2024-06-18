@@ -50,13 +50,20 @@ button {
 }
 
 button:hover {
-    background-color: #F9F7F1;
+    background-color: var(--vt-c-white);
     color: var(--vt-c-orange);
     border: solid, var(--vt-c-orange), 2px;
 }
 
 button:active {
     background-color: var(--vt-c-orange);
+}
+
+.resetBtn {
+    background-color: var(--vt-c-white);
+    color: var(--vt-c-orange);
+    border: solid, var(--vt-c-orange), 2px;
+
 }
   
 
