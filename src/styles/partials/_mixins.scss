@@ -1,0 +1,29 @@
+@mixin button {
+    background-color: var(--vt-c-orange);
+    color: #F9F7F1;
+    border: solid, var(--vt-c-orange), 2px;
+    padding: 7px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.2s;
+    margin: 5px;
+}
+
+@mixin button-hover {
+    background-color: var(--vt-c-white);
+    color: var(--vt-c-orange);
+    border: solid, var(--vt-c-orange), 2px;
+}
+
+@mixin resetBtn {
+    background-color: var(--vt-c-white);
+    color: var(--vt-c-orange);
+    border: solid, var(--vt-c-orange), 2px;
+}
+
+@mixin resetBtn-hover {
+    background-color: var(--vt-c-orange);
+    color: var(--vt-c-white);
+    border: solid, var(--vt-c-orange), 2px;
+}

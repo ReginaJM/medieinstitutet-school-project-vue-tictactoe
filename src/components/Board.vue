@@ -149,7 +149,7 @@ const toggleScoreBoard = () => {
             </div>
 
             <div class="buttons-container">
-                <button @click="toggleScoreBoard">Show score</button>
+                <button @click="toggleScoreBoard">Show Score</button>
                 <button v-if="props.gameOver" @click="resetBoard">Play again</button>
             </div>
         </div>
@@ -161,7 +161,7 @@ const toggleScoreBoard = () => {
                 :playerX="props.playerX"
                 :playerO="props.playerO"
             />
-        <button @click="toggleScoreBoard">Back to game</button>
+        <button @click="toggleScoreBoard">Back to Game</button>
         </div>
     </div>
 </template>
@@ -173,8 +173,6 @@ const toggleScoreBoard = () => {
     justify-content: center;
     align-items: center;
     text-align: center;
-
-
 
     .game-board {
     display: grid;

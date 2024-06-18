@@ -26,7 +26,7 @@ const handleSubmit = () => {
       <label for="playerO">Player O name:</label><br />
       <input type="text" id="playerO" required v-model="playerO" /><br />
 
-      <button type="submit" value="Start game">Start game</button>
+      <button type="submit" value="Start game">Start Game</button>
     </form>
   </div>
 </template>

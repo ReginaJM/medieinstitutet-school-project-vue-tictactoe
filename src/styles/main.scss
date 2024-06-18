@@ -1,4 +1,5 @@
 @import './partials/variables';
+@import './partials/mixins';
 
 body {
     margin: 0 auto;
@@ -42,37 +43,17 @@ body {
 }
 
 button {
-    background-color: var(--vt-c-orange);
-    color: #F9F7F1;
-    border: solid, var(--vt-c-orange), 2px;
-    padding: 7px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 20px;
-    transition: background-color 0.2s;
-    margin: 5px;
+    @include button;
 }
 
 button:hover {
-    background-color: var(--vt-c-white);
-    color: var(--vt-c-orange);
-    border: solid, var(--vt-c-orange), 2px;
+    @include button-hover;
 }
 
 .resetBtn {
-    background-color: var(--vt-c-white);
-    color: var(--vt-c-orange);
-    border: solid, var(--vt-c-orange), 2px;
+    @include resetBtn;
 }
 
 .resetBtn:hover {
-    background-color: var(--vt-c-orange);
-    color: var(--vt-c-white);
-    border: solid, var(--vt-c-orange), 2px;
+    @include resetBtn-hover
 }
-  
-
-  
-
-
-

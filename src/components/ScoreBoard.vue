@@ -39,7 +39,7 @@ watch([playerXpoints, playerOpoints], savePointsToLocalStorage);
 
 <template>
     <div class="score-board">
-        <h2>Score board</h2>
+        <h2>Score Board</h2>
         <div class="scores">
             <p>Player X - {{ playerX }}: {{ playerXpoints }}</p>
             <p>Player O - {{ playerO }}: {{ playerOpoints }}</p>
