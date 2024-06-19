@@ -2,7 +2,11 @@
 import Players from './Players.vue';
 import Board from './Board.vue';
 import VictoryCheck from './VictoryCheck.vue';
-import { ref, onMounted, watch } from 'vue';
+import { addPointPlayerX } from '../utils/addPointPlayerXUtils.js';
+import { addPointPlayerO } from '../utils/addPointPlayerOUtils.js';
+import { resetBoard } from '../utils/resetBoardUtils.js';
+import { startNewGame } from '../utils/startNewGameUtils.js';
+import { ref, Ref, onMounted, watch } from 'vue';
 
 const playerX = ref<string>("");
 const playerO = ref<string>("");
@@ -75,41 +79,24 @@ const updatePlayerRow = (playerAndIndex: { index: number; player: string }) => {
     };
 };
 
-const addPointPlayerX = () => {
-    playerXpoints.value += 1;
-    saveState(); 
-};
-
-const addPointPlayerO = () => {
-    playerOpoints.value += 1;
-    saveState(); 
-};
-
-const resetBoard = () => {
-  playerXrow.value = [];
-  playerOrow.value = [];
-  totalMoves.value = [];
-  saveState(); 
-};
-
 const handlePlayerXVictory = () => {
   playerXVictory.value = true;
-  addPointPlayerX();
+  addPointPlayerX(playerXpoints, saveState);
   gameOver.value = true; 
-  resetBoard();
+  resetBoard(playerXrow, playerOrow, totalMoves, saveState);
 };
 
 const handlePlayerOVictory = () => {
    playerOVictory.value = true;
-  addPointPlayerO();
+  addPointPlayerO(playerOpoints, saveState);
   gameOver.value = true; 
-  resetBoard();
+  resetBoard(playerXrow, playerOrow, totalMoves, saveState);
 };
 
 const handleTie = () => {
     tie.value = true;
     gameOver.value = true; 
-    resetBoard();
+    resetBoard(playerXrow, playerOrow, totalMoves, saveState);
 };
 
 const handleShowScore = () => {
@@ -118,12 +105,8 @@ const handleShowScore = () => {
     tie.value = false;
 };
 
-const startNewGame = () => {
-  resetBoard();
-  playerXVictory.value = false;
-  playerOVictory.value = false;
-  tie.value = false;
-  gameOver.value = false; 
+const handleClearBoard = () => {
+  startNewGame(playerXrow, playerOrow, totalMoves, saveState, playerXVictory, playerOVictory, tie, gameOver);
 };
 
 const resetGame = () => {
@@ -167,7 +150,7 @@ watch(
             :playerXpoints="playerXpoints"
             :playerOpoints="playerOpoints"
             @square-click="updatePlayerRow" 
-            @clear-board="startNewGame"
+            @clear-board="handleClearBoard"
             @show-score="handleShowScore"
 
         />
@@ -219,5 +202,3 @@ watch(
     visibility: hidden;
 }
 </style>
-
-
