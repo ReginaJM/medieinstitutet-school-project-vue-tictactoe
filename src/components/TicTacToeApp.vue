@@ -202,7 +202,6 @@ watch(
   text-align: center;
 
   background-color: var(--vt-c-beige);
-  border: solid 2px var(--vt-c-darkbrown);
   border-radius: 40px; 
 
   position: absolute;
@@ -220,3 +219,5 @@ watch(
     visibility: hidden;
 }
 </style>
+
+
