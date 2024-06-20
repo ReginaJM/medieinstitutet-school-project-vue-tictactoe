@@ -2,7 +2,6 @@
 import { ref, onMounted, watch } from "vue";
 import Square from "./Square.vue";
 import ScoreBoard from "./ScoreBoard.vue";
-/* import { useVictoryCheck, IVictoryCheckProps } from "../utils/victoryCheck.js"; */
 
 const board = ref<string[]>(Array(9).fill(""));
 const currentPlayer = ref<string>("X");
@@ -22,16 +21,11 @@ const emit = defineEmits<{
   (e: "square-click", playerAndIndex: { index: number; player: string }): void;
   (e: "clear-board"): void;
   (e: "show-score"): void;
-/*   (e: "playerXVictory"): void;
-  (e: "playerOVictory"): void;
-  (e: "itsATie"): void; */
 }>();
 
 const playerXrow = ref<number[]>([]);
 const playerOrow = ref<number[]>([]);
 const totalMoves = ref<number[]>([]);
-
-/* type VictoryEvent = "playerXVictory" | "playerOVictory" | "itsATie"; */
 
 const handleSquareClick = (index: number) => {
   if (board.value[index] === "" && !props.gameOver) {
@@ -41,36 +35,6 @@ const handleSquareClick = (index: number) => {
     saveBoardState();
   }
 }; 
-
-/* const handleSquareClick = (index: number) => {
-  if (board.value[index] === "" && !props.gameOver) {
-    emit("square-click", { index, player: currentPlayer.value });
-    board.value[index] = currentPlayer.value;
-
-    if (currentPlayer.value === "X") {
-      playerXrow.value.push(index);
-    } else {
-      playerOrow.value.push(index);
-    }
-
-    totalMoves.value.push(index);
-    currentPlayer.value = currentPlayer.value === "X" ? "O" : "X";
-
-    const victoryCheckProps: IVictoryCheckProps = {
-      playerX: props.playerX,
-      playerO: props.playerO,
-      playerXrow: playerXrow.value,
-      playerOrow: playerOrow.value,
-      totalMoves: totalMoves.value,
-    };
-
-    useVictoryCheck(victoryCheckProps, (event: VictoryEvent) => {
-      emit(event);
-    });
-
-    saveBoardState();
-  }
-}; */
 
 const decideStartingPlayer = () => {
   currentPlayer.value = Math.random() < 0.5 ? "X" : "O";

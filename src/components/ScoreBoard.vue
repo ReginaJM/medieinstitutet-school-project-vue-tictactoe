@@ -66,7 +66,4 @@ watch([playerXpoints, playerOpoints], savePointsToLocalStorage);
         color: var(--vt-c-darkbrown);
     }
 }
-
-
-
 </style>
