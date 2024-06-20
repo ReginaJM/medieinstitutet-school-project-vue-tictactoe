@@ -24,7 +24,6 @@ const handleClick = () => {
 </template>
 
 <style scoped lang="scss">
-
 .square {
     max-width: 100px auto;
     max-height: 100px;
@@ -32,7 +31,7 @@ const handleClick = () => {
     border: 1px solid var(--vt-c-darkbrown);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; 
     font-family: sans-serif;
     font-size: 2em;
     cursor: pointer;

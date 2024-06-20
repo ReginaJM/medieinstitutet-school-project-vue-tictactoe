@@ -5,12 +5,10 @@ import TicTacToeApp from './components/TicTacToeApp.vue'
 
 
 <template>
+
   <TicTacToeApp />
+
 </template>
 
 
-
-
-<style scoped>
-
-</style>
+<style scoped></style>

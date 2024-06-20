@@ -31,12 +31,4 @@ const handleSubmit = () => {
   </div>
 </template>
 
-<style scoped lang="scss">
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-</style>
+<style scoped lang="scss"></style>

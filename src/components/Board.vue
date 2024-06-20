@@ -132,26 +132,12 @@ const toggleScoreBoard = () => {
 
 <style scoped lang="scss">
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-
     .game-board {
     display: grid;
     grid-template-columns: repeat(3, 100px);
     grid-template-rows: repeat(3, 100px);
     gap: 10px;
     margin-bottom: 20px;
-    }
-
-    .buttons-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
     }
 }
 

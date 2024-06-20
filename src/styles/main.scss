@@ -2,13 +2,13 @@
 @import './partials/mixins';
 
 body {
-    margin: 0 auto;
     background-color: var(--vt-c-beige);
+    display: grid;
+    place-items: center; 
+    height: 100vh; 
 }
 
 #app {
-    padding: 2rem;
-    height: auto;
     h1 {
         color: var(--vt-c-darkbrown);
         font-size: 3rem;
