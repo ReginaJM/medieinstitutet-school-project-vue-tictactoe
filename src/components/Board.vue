@@ -149,8 +149,8 @@ const toggleScoreBoard = () => {
             </div>
 
             <div class="buttons-container">
-                <button @click="toggleScoreBoard">Score Board</button>
-                <button v-if="props.gameOver" @click="resetBoard">Play again</button>
+              <button v-if="props.gameOver" @click="resetBoard">Play again</button>  
+              <button @click="toggleScoreBoard">Score Board</button>
             </div>
         </div>
 

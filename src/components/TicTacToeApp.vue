@@ -6,7 +6,7 @@ import { addPointPlayerX } from '../utils/addPointPlayerXUtils.js';
 import { addPointPlayerO } from '../utils/addPointPlayerOUtils.js';
 import { resetBoard } from '../utils/resetBoardUtils.js';
 import { startNewGame } from '../utils/startNewGameUtils.js';
-import { ref, Ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 
 const playerX = ref<string>("");
 const playerO = ref<string>("");
